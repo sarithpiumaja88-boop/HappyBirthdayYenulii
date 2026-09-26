@@ -559,23 +559,94 @@
             grid-template-columns: repeat(4,1fr);
             gap: 10px;
             margin-top: 20px;
+            perspective: 900px;
         }
 
         .match-card {
+            position: relative;
             height: 120px;
+            padding: 0;
             border: 1px solid rgba(255,165,195,0.2);
             border-radius: 17px;
             color: transparent;
             background: rgba(255,255,255,0.03);
             font-size: 32px;
-            transition: 0.3s ease;
+            line-height: 1;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            -webkit-tap-highlight-color: transparent;
+            transition: transform 0.35s ease, background 0.25s ease, border-color 0.25s ease;
+        }
+
+        .match-card::before {
+            content: "♡";
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            color: rgba(255,165,195,0.7);
+            font-size: 28px;
+            transform: translateZ(1px);
+        }
+
+        .match-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            color: #fff;
+            font-size: 34px;
+            transform: rotateY(180deg) translateZ(1px);
+            opacity: 0;
         }
 
         .match-card.flipped,
         .match-card.matched {
-            color: #fff;
+            color: transparent;
             background: rgba(255,95,150,0.15);
+            border-color: rgba(255,165,195,0.5);
             transform: rotateY(180deg);
+        }
+
+        .match-card.flipped::before,
+        .match-card.matched::before {
+            opacity: 0;
+        }
+
+        .match-card.flipped::after,
+        .match-card.matched::after {
+            content: attr(data-symbol);
+            opacity: 1;
+        }
+
+        .match-card.matched {
+            box-shadow: 0 0 25px rgba(255,95,150,0.16);
+        }
+
+        .match-card:disabled {
+            cursor: default;
+        }
+
+        @media (max-width: 620px) {
+            .match-grid {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+                gap: 7px;
+            }
+
+            .match-card {
+                height: 84px;
+                border-radius: 13px;
+                font-size: 25px;
+            }
+
+            .match-card::before {
+                font-size: 22px;
+            }
+
+            .match-card::after {
+                font-size: 27px;
+            }
         }
 
         .status {
@@ -695,33 +766,141 @@
             border: 1px solid var(--line);
             border-radius: 28px;
             background:
-                radial-gradient(circle at 50% 50%, rgba(255,95,150,0.12), transparent 48%),
-                #08050d;
+                radial-gradient(circle at 50% 50%, rgba(255,95,150,0.10), transparent 48%),
+                radial-gradient(circle at 20% 20%, rgba(255,255,255,0.04), transparent 35%),
+                #05040a;
+            touch-action: none;
+        }
+
+        .constellation-bg-star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.55);
+            pointer-events: none;
         }
 
         .constellation-star {
             position: absolute;
-            width: 10px;
-            height: 10px;
+            width: 14px;
+            height: 14px;
+            margin: -7px 0 0 -7px;
             border-radius: 50%;
-            background: #fff;
-            box-shadow: 0 0 17px rgba(255,255,255,0.9);
+            background: rgba(255,255,255,0.03);
+            border: 1px solid transparent;
+            box-shadow: none;
             cursor: pointer;
-            transition: 0.25s ease;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: opacity 0.45s ease, transform 0.45s ease, background 0.25s ease, box-shadow 0.25s ease;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        .constellation-star.active {
+            opacity: 1;
+            transform: scale(1);
+            background: #fff;
+            border-color: rgba(255,255,255,0.75);
+            box-shadow: 0 0 7px #fff, 0 0 20px rgba(255,255,255,0.9);
+            animation: constellationPulse 1.45s ease-in-out infinite;
         }
 
         .constellation-star.found {
+            opacity: 1;
             transform: scale(1.65);
             background: var(--rose);
-            box-shadow: 0 0 25px rgba(255,95,150,0.95);
+            border-color: #fff;
+            box-shadow: 0 0 9px #fff, 0 0 28px rgba(255,95,150,0.95);
+            animation: none;
+        }
+
+        .constellation-star.wrong {
+            animation: constellationWrong 0.32s ease;
+        }
+
+        @keyframes constellationPulse {
+            0%,100% { box-shadow: 0 0 7px #fff, 0 0 14px rgba(255,255,255,0.6); }
+            50% { box-shadow: 0 0 10px #fff, 0 0 29px rgba(255,165,195,0.95); }
+        }
+
+        @keyframes constellationWrong {
+            0%,100% { transform: scale(1) translateX(0); }
+            25% { transform: scale(1) translateX(-5px); }
+            75% { transform: scale(1) translateX(5px); }
         }
 
         .constellation-line {
             position: absolute;
-            height: 1px;
+            height: 2px;
             transform-origin: left center;
-            background: rgba(255,165,195,0.35);
+            background: linear-gradient(90deg, rgba(255,165,195,0.1), rgba(255,165,195,0.75));
+            box-shadow: 0 0 9px rgba(255,95,150,0.35);
             pointer-events: none;
+            transform: scaleX(0);
+            animation: constellationLine 0.55s ease forwards;
+        }
+
+        @keyframes constellationLine {
+            to { transform: var(--line-rotation) scaleX(1); }
+        }
+
+        .constellation-info {
+            width: min(850px,100%);
+            margin: 20px auto 0;
+            text-align: center;
+        }
+
+        .constellation-progress {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .constellation-story {
+            min-height: 120px;
+            margin-top: 15px;
+            padding: 22px;
+            border: 1px solid rgba(255,165,195,0.16);
+            border-radius: 22px;
+            background: rgba(255,255,255,0.035);
+        }
+
+        .constellation-story h3 {
+            margin-bottom: 9px;
+            color: var(--soft);
+            font-size: 24px;
+            font-weight: 400;
+        }
+
+        .constellation-story p {
+            color: var(--muted);
+            line-height: 1.85;
+        }
+
+        @media (max-width: 620px) {
+            .constellation {
+                height: min(72vh, 470px);
+                min-height: 360px;
+                border-radius: 22px;
+            }
+
+            .constellation-progress {
+                flex-direction: column;
+                gap: 4px;
+            }
+
+            .constellation-story {
+                padding: 18px;
+            }
+
+            .constellation-story h3 {
+                font-size: 21px;
+            }
         }
 
         .vault-display {
@@ -2126,13 +2305,23 @@
                 <div class="title">
                     <div class="kicker">Look closely</div>
                     <h2>Our Little Constellation</h2>
-                    <p>Find seven stars. Connect the sky.</p>
+                    <p>Find the stars in order. Connect the sky. Every replay reveals a different constellation.</p>
                 </div>
 
                 <div class="constellation" id="constellationBox"></div>
 
-                <div class="letter" id="constellationMessage" style="margin-top:20px;text-align:center;">
-                    <p>Stars found: 0 / 7</p>
+                <div class="constellation-info">
+                    <div class="constellation-progress" id="constellationProgress">
+                        <span id="constellationCount">Star 1 of 7</span>
+                        <span id="constellationHint">Find the softly glowing star.</span>
+                    </div>
+                    <div class="constellation-story" id="constellationStory">
+                        <h3 id="constellationName">Tonight's sky is waiting.</h3>
+                        <p id="constellationMeaning">The constellation will reveal its story when you connect all the stars.</p>
+                    </div>
+                    <button class="cta" id="nextConstellation" onclick="startConstellation()" style="display:none;">
+                        Discover another constellation ✦
+                    </button>
                 </div>
             </div>
         </section>
@@ -2339,7 +2528,7 @@
             }
 
             result.innerHTML =
-                "Scientific conclusion: this birthday website may have slightly too much effort in it. ♡<br><br>Congratulations. You may continue.";
+                "Scientific conclusion: this birthday website may have slightly too much effort in it. ♡<br><br>Continue.";
             showToast("Quiz complete ♡");
         }
 
@@ -2361,52 +2550,56 @@
 
             cards.forEach(value => {
                 const button = document.createElement("button");
+                button.type = "button";
                 button.className = "match-card";
-                button.textContent = value;
                 button.dataset.value = value;
-
-                button.addEventListener("click", () => {
-                    if (matchLock || button.classList.contains("flipped") || button.classList.contains("matched")) {
-                        return;
-                    }
-
-                    button.classList.add("flipped");
-
-                    if (!matchFirst) {
-                        matchFirst = button;
-                        return;
-                    }
-
-                    matchLock = true;
-
-                    if (matchFirst.dataset.value === button.dataset.value) {
-                        matchFirst.classList.add("matched");
-                        button.classList.add("matched");
-
-                        matchPairs++;
-                        matchFirst = null;
-                        matchLock = false;
-
-                        status.textContent = `Pairs found: ${matchPairs} / 8`;
-
-                        if (matchPairs === 8) {
-                            status.textContent = "Arcade complete. You found every pair. ♡";
-                            showToast("Memory Match complete");
-                        }
-                    } else {
-                        setTimeout(() => {
-                            button.classList.remove("flipped");
-                            matchFirst.classList.remove("flipped");
-                            matchFirst = null;
-                            matchLock = false;
-                        }, 650);
-                    }
-                });
-
+                button.dataset.symbol = value;
+                button.setAttribute("aria-label", "Hidden memory card");
+                button.addEventListener("click", () => flipMatchCard(button));
                 grid.appendChild(button);
             });
         }
 
+        function flipMatchCard(button) {
+            if (matchLock || button.classList.contains("flipped") || button.classList.contains("matched")) {
+                return;
+            }
+
+            button.classList.add("flipped");
+
+            if (!matchFirst) {
+                matchFirst = button;
+                return;
+            }
+
+            matchLock = true;
+            const first = matchFirst;
+
+            if (first.dataset.value === button.dataset.value) {
+                first.classList.add("matched");
+                button.classList.add("matched");
+
+                matchPairs++;
+                matchFirst = null;
+                matchLock = false;
+
+                document.getElementById("matchStatus").textContent =
+                    `Pairs found: ${matchPairs} / 8`;
+
+                if (matchPairs === 8) {
+                    document.getElementById("matchStatus").textContent =
+                        "Arcade complete. You found every pair. ♡";
+                    showToast("Memory Match complete");
+                }
+            } else {
+                setTimeout(() => {
+                    first.classList.remove("flipped");
+                    button.classList.remove("flipped");
+                    matchFirst = null;
+                    matchLock = false;
+                }, 700);
+            }
+        }
         let selectedPhoto = null;
 
         function photoRoulette() {
@@ -2488,74 +2681,214 @@
             card.querySelector(".hidden").classList.toggle("hidden");
         }
 
-        const starPoints = [
-            [11, 24],
-            [25, 13],
-            [40, 29],
-            [55, 17],
-            [70, 30],
-            [84, 48],
-            [66, 59],
-            [48, 44],
-            [31, 65],
-            [18, 51]
+        const constellationSets = [
+            {
+                name: "Lyra ♡",
+                stars: [[18, 58], [31, 42], [43, 25], [56, 39], [70, 25], [79, 48], [63, 67]],
+                lines: [[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,3]],
+                story: "Lyra is traditionally represented by a lyre, the musical instrument associated with Orpheus. For this page, it becomes a little symbol of love expressed through music, memories and the things we cannot always say out loud."
+            },
+            {
+                name: "Pisces ♡",
+                stars: [[17, 38], [29, 25], [42, 31], [54, 47], [68, 42], [78, 58], [64, 72], [48, 65]],
+                lines: [[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[7,3]],
+                story: "Pisces is traditionally shown as two fish. In one Greek myth, Aphrodite and Eros are associated with fish while escaping danger. Here, the two connected paths are a poetic reminder that people can find each other even when life gets complicated."
+            },
+            {
+                name: "Gemini ♡",
+                stars: [[25, 66], [35, 51], [31, 31], [42, 18], [58, 27], [66, 46], [73, 66], [57, 56]],
+                lines: [[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[2,7],[7,5]],
+                story: "Gemini represents the twins Castor and Pollux in Greek tradition. Their story is strongly connected with devotion between siblings. On this page, that becomes a gentle idea: the best memories are often the ones made side by side."
+            },
+            {
+                name: "Libra ♡",
+                stars: [[24, 35], [39, 26], [54, 35], [68, 26], [78, 45], [64, 58], [48, 67], [31, 58]],
+                lines: [[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[7,0],[1,6]],
+                story: "Libra is traditionally represented by the scales. Its theme of balance makes it a fitting poetic constellation for two people learning how to share ordinary days, laughter, space and memories."
+            },
+            {
+                name: "Canis Major ♡",
+                stars: [[16, 55], [29, 45], [43, 48], [57, 30], [70, 38], [80, 23], [73, 57], [57, 69]],
+                lines: [[0,1],[1,2],[2,3],[3,4],[4,5],[4,6],[6,7],[7,2]],
+                story: "Canis Major is traditionally depicted as a great dog and contains Sirius, the brightest star in the night sky. For this little game, it stands for loyalty: the quiet kind that keeps showing up in the small moments."
+            },
+            {
+                name: "Andromeda ♡",
+                stars: [[18, 28], [31, 38], [45, 49], [59, 58], [73, 48], [82, 34], [68, 24]],
+                lines: [[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,4]],
+                story: "Andromeda is a princess from Greek mythology and one of the constellations in the Perseus family of stories. Here, her chain of stars becomes a poetic reminder that every life can contain difficult chapters and beautiful new ones."
+            }
         ];
 
+        let constellationRound = 0;
+        let activeConstellation = null;
+        let constellationFound = 0;
+
         const constellationBox = document.getElementById("constellationBox");
-        let starsFound = 0;
 
-        starPoints.forEach((position, index) => {
-            const star = document.createElement("span");
+        function createBackgroundStars() {
+            constellationBox.querySelectorAll(".constellation-bg-star").forEach(star => star.remove());
 
-            star.className = "constellation-star";
-            star.style.left = position[0] + "%";
-            star.style.top = position[1] + "%";
-            star.dataset.index = index;
+            for (let i = 0; i < 70; i++) {
+                const star = document.createElement("span");
+                star.className = "constellation-bg-star";
+                star.style.left = (2 + Math.random() * 96) + "%";
+                star.style.top = (3 + Math.random() * 94) + "%";
+                star.style.opacity = (0.18 + Math.random() * 0.55).toFixed(2);
+                constellationBox.appendChild(star);
+            }
+        }
 
-            star.addEventListener("click", () => {
-                if (star.classList.contains("found")) return;
+        function startConstellation() {
+            activeConstellation = constellationSets[constellationRound % constellationSets.length];
+            constellationRound++;
+            constellationFound = 0;
 
-                star.classList.add("found");
-                starsFound++;
+            constellationBox.innerHTML = "";
+            createBackgroundStars();
 
-                document.getElementById("constellationMessage").innerHTML =
-                    `<p>Stars found: ${starsFound} / 7</p>`;
+            activeConstellation.stars.forEach((position, index) => {
+                const star = document.createElement("button");
+                star.type = "button";
+                star.className = "constellation-star";
+                star.style.left = position[0] + "%";
+                star.style.top = position[1] + "%";
+                star.dataset.index = index;
+                star.setAttribute("aria-label", `Constellation star ${index + 1}`);
 
-                if (starsFound === 7) {
-                    drawConstellation();
+                star.addEventListener("pointerdown", event => {
+                    event.preventDefault();
+                    selectConstellationStar(index);
+                });
 
-                    document.getElementById("constellationMessage").innerHTML =
-                        "<p>Seven stars. One little constellation. Maybe some things look better when the dots connect. ♡</p>";
-
-                    showToast("Constellation complete");
-                }
+                constellationBox.appendChild(star);
             });
 
-            constellationBox.appendChild(star);
-        });
+            document.getElementById("constellationName").textContent = "A new sky is waiting.";
+            document.getElementById("constellationMeaning").textContent =
+                "Find the glowing stars in order. The next one appears only after the previous one is found.";
+            document.getElementById("constellationHint").textContent =
+                "Find the softly glowing star.";
+            document.getElementById("nextConstellation").style.display = "none";
+            updateConstellationProgress();
 
-        function drawConstellation() {
-            const points = starPoints.slice(0, 7);
+            revealNextConstellationStar();
+        }
 
-            for (let i = 0; i < points.length - 1; i++) {
-                const [x1, y1] = points[i];
-                const [x2, y2] = points[i + 1];
+        function updateConstellationProgress() {
+            const total = activeConstellation ? activeConstellation.stars.length : 7;
+            const next = Math.min(constellationFound + 1, total);
 
-                const line = document.createElement("span");
-                line.className = "constellation-line";
+            document.getElementById("constellationCount").textContent =
+                constellationFound >= total
+                    ? `${total} stars connected`
+                    : `Star ${next} of ${total}`;
+        }
+
+        function revealNextConstellationStar() {
+            const stars = constellationBox.querySelectorAll(".constellation-star");
+            stars.forEach(star => star.classList.remove("active"));
+
+            const next = stars[constellationFound];
+            if (next) {
+                requestAnimationFrame(() => next.classList.add("active"));
+            }
+        }
+
+        function selectConstellationStar(index) {
+            if (!activeConstellation) return;
+
+            if (index !== constellationFound) {
+                const wrong = constellationBox.querySelector(`[data-index="${index}"]`);
+                wrong.classList.remove("wrong");
+                void wrong.offsetWidth;
+                wrong.classList.add("wrong");
+                showToast("Not that star yet — follow the glowing one.");
+                return;
+            }
+
+            const stars = constellationBox.querySelectorAll(".constellation-star");
+            const current = stars[index];
+            current.classList.remove("active");
+            current.classList.add("found");
+
+            if (index > 0) {
+                drawConstellationSegment(index - 1, index);
+            }
+
+            constellationFound++;
+            updateConstellationProgress();
+
+            if (constellationFound === activeConstellation.stars.length) {
+                finishConstellation();
+                return;
+            }
+
+            document.getElementById("constellationHint").textContent =
+                "Good. Now find the next glowing star.";
+            setTimeout(revealNextConstellationStar, 220);
+        }
+
+        function drawConstellationSegment(fromIndex, toIndex) {
+            const [x1, y1] = activeConstellation.stars[fromIndex];
+            const [x2, y2] = activeConstellation.stars[toIndex];
+
+            const dx = (x2 - x1) * 0.01 * constellationBox.clientWidth;
+            const dy = (y2 - y1) * 0.01 * constellationBox.clientHeight;
+            const length = Math.sqrt(dx * dx + dy * dy);
+
+            const line = document.createElement("span");
+            line.className = "constellation-line";
+            line.style.width = length + "px";
+            line.style.left = x1 + "%";
+            line.style.top = y1 + "%";
+            line.style.setProperty("--line-rotation", `rotate(${Math.atan2(dy, dx)}rad)`);
+            constellationBox.appendChild(line);
+        }
+
+        function finishConstellation() {
+            activeConstellation.lines.forEach(([from, to], index) => {
+                if (from >= constellationFound || to >= constellationFound) return;
+                if (from === to) return;
+                if (to === from + 1) return;
+
+                const alreadyDrawn = constellationBox.querySelector(
+                    `.constellation-extra-${index}`
+                );
+
+                if (alreadyDrawn) return;
+
+                const [x1, y1] = activeConstellation.stars[from];
+                const [x2, y2] = activeConstellation.stars[to];
 
                 const dx = (x2 - x1) * 0.01 * constellationBox.clientWidth;
                 const dy = (y2 - y1) * 0.01 * constellationBox.clientHeight;
                 const length = Math.sqrt(dx * dx + dy * dy);
 
+                const line = document.createElement("span");
+                line.className = `constellation-line constellation-extra-${index}`;
                 line.style.width = length + "px";
                 line.style.left = x1 + "%";
                 line.style.top = y1 + "%";
-                line.style.transform = `rotate(${Math.atan2(dy, dx)}rad)`;
-
+                line.style.setProperty("--line-rotation", `rotate(${Math.atan2(dy, dx)}rad)`);
+                line.style.animationDelay = `${index * 90}ms`;
                 constellationBox.appendChild(line);
-            }
+            });
+
+            document.getElementById("constellationName").textContent =
+                activeConstellation.name;
+            document.getElementById("constellationMeaning").textContent =
+                activeConstellation.story;
+            document.getElementById("constellationHint").textContent =
+                "You connected the whole sky. ♡";
+            document.getElementById("constellationCount").textContent =
+                `${activeConstellation.stars.length} stars connected`;
+
+            document.getElementById("nextConstellation").style.display = "inline-flex";
+            showToast(`${activeConstellation.name} complete`);
         }
+
+        startConstellation();
 
         document.querySelectorAll(".candle").forEach(candle => {
             candle.addEventListener("click", () => {
