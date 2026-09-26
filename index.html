@@ -1,0 +1,2791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#09050f">
+    <title>For Devi ♡</title>
+
+    <style>
+        :root {
+            --bg: #09050f;
+            --bg2: #130817;
+            --card: rgba(255, 255, 255, 0.065);
+            --card2: rgba(255, 255, 255, 0.10);
+            --line: rgba(255, 255, 255, 0.12);
+            --pink: #ff5f96;
+            --rose: #ffa5c3;
+            --soft: #ffe8f0;
+            --white: #fff9fc;
+            --muted: #cbb9c3;
+            --shadow: 0 30px 90px rgba(0, 0, 0, 0.34);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: var(--white);
+            background:
+                radial-gradient(circle at 12% 8%, rgba(255, 95, 150, 0.18), transparent 30%),
+                radial-gradient(circle at 88% 75%, rgba(125, 78, 255, 0.14), transparent 33%),
+                var(--bg);
+            font-family: Georgia, "Times New Roman", serif;
+        }
+
+        button,
+        input {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        #stars {
+            position: fixed;
+            inset: 0;
+            z-index: -4;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            border-radius: 50%;
+            background: #fff;
+            opacity: 0.35;
+            animation: blink 3.6s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% {
+                transform: scale(0.4);
+                opacity: 0.12;
+            }
+
+            50% {
+                transform: scale(1.8);
+                opacity: 0.9;
+            }
+        }
+
+        #heartCanvas {
+            position: fixed;
+            inset: 0;
+            z-index: -3;
+            pointer-events: none;
+            opacity: 0.75;
+        }
+
+        .topbar {
+            position: fixed;
+            top: 9px;
+            left: 50%;
+            z-index: 100;
+            width: min(96%, 1260px);
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 7px;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            background: rgba(7, 4, 12, 0.72);
+            backdrop-filter: blur(18px);
+            box-shadow: 0 15px 55px rgba(0, 0, 0, 0.22);
+        }
+
+        .nav-scroll {
+            display: flex;
+            gap: 5px;
+            min-width: 0;
+            flex: 1;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .nav-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .nav-btn,
+        .music-btn {
+            flex: 0 0 auto;
+            border: 0;
+            border-radius: 999px;
+            padding: 9px 11px;
+            color: var(--white);
+            background: transparent;
+            font-size: 12px;
+            transition: 0.25s ease;
+        }
+
+        .nav-btn:hover,
+        .nav-btn.active,
+.music-panel p {
+            margin-top: 9px;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        .music-btn.active {
+            color: var(--rose);
+            background: rgba(255, 95, 150, 0.17);
+        }
+
+        .music-btn {
+            border-left: 1px solid var(--line);
+            white-space: nowrap;
+        }
+
+        .progress-shell {
+            position: fixed;
+            left: 50%;
+            bottom: 11px;
+            z-index: 95;
+            width: min(390px, 82%);
+            height: 6px;
+            transform: translateX(-50%);
+            overflow: hidden;
+            border-radius: 99px;
+            background: rgba(255,255,255,0.08);
+        }
+
+        .progress-bar {
+            width: 0;
+            height: 100%;
+            border-radius: 99px;
+            background: linear-gradient(90deg, var(--pink), #ffdce9);
+            transition: width 0.45s ease;
+        }
+
+        .page {
+            display: none;
+            min-height: 100vh;
+            padding: 108px 20px 74px;
+            animation: pageIn 0.65s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes pageIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .wrap {
+            width: min(1220px, 100%);
+            margin: 0 auto;
+        }
+
+        .hero {
+            min-height: calc(100vh - 165px);
+            display: grid;
+            place-items: center;
+            text-align: center;
+        }
+
+        .hero-card {
+            width: min(900px, 100%);
+            padding: 46px 20px;
+        }
+
+        .kicker {
+            margin-bottom: 20px;
+            color: var(--rose);
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            font-size: 11px;
+        }
+
+        h1 {
+            font-size: clamp(60px, 14vw, 148px);
+            font-weight: 400;
+            line-height: 0.9;
+            letter-spacing: -5px;
+            text-shadow: 0 0 45px rgba(255,95,150,0.24);
+        }
+
+        .hero h2 {
+            margin: 26px 0 13px;
+            font-size: clamp(22px, 4.6vw, 41px);
+            font-weight: 400;
+        }
+
+        .hero p,
+        .lead {
+            color: var(--muted);
+            line-height: 1.95;
+            font-size: 16px;
+        }
+
+        .cta,
+        .ghost-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 25px;
+            padding: 14px 21px;
+            border: 1px solid rgba(255,165,195,0.35);
+            border-radius: 999px;
+            color: #fff;
+            background: rgba(255,95,150,0.12);
+            transition: 0.25s ease;
+        }
+
+        .ghost-btn {
+            margin-top: 0;
+            background: rgba(255,255,255,0.035);
+        }
+
+        .cta:hover,
+        .ghost-btn:hover {
+            transform: translateY(-3px);
+            background: rgba(255,95,150,0.20);
+            box-shadow: 0 15px 45px rgba(255,95,150,0.15);
+        }
+
+        .title {
+            width: min(850px, 100%);
+            margin: 0 auto 42px;
+            text-align: center;
+        }
+
+        .title h2 {
+            font-size: clamp(37px, 7vw, 73px);
+            font-weight: 400;
+        }
+
+        .title p {
+            margin-top: 10px;
+            color: var(--muted);
+            line-height: 1.75;
+        }
+
+        .intro-grid,
+        .map-grid,
+        .reasons-grid,
+        .postcards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            width: min(1090px, 100%);
+            margin: 0 auto;
+        }
+
+        .intro-card,
+        .map-card,
+        .reason-card,
+        .postcard {
+            min-height: 190px;
+            padding: 28px;
+            border: 1px solid var(--line);
+            border-radius: 27px;
+            background: var(--card);
+            transition: 0.3s ease;
+        }
+
+        .intro-card:hover,
+        .map-card:hover,
+        .reason-card:hover,
+        .postcard:hover {
+            transform: translateY(-6px);
+            background: var(--card2);
+        }
+
+        .intro-card .icon,
+        .reason-card .icon {
+            margin-bottom: 14px;
+            font-size: 36px;
+        }
+
+        .intro-card h3,
+        .map-card h3,
+        .reason-card h3,
+        .postcard h3 {
+            margin-bottom: 9px;
+            font-size: 21px;
+            font-weight: 400;
+        }
+
+        .intro-card p,
+        .map-card p,
+        .reason-card p,
+        .postcard p {
+            color: var(--muted);
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        .map-card {
+            min-height: 205px;
+            cursor: pointer;
+        }
+
+        .map-number {
+            margin-bottom: 13px;
+            color: var(--rose);
+            font-size: 12px;
+            letter-spacing: 2px;
+        }
+
+        .map-card span {
+            display: inline-block;
+            margin-top: 16px;
+            color: var(--rose);
+            font-size: 13px;
+        }
+
+        .letter {
+            width: min(870px, 100%);
+            margin: 0 auto;
+            padding: 43px;
+            border: 1px solid var(--line);
+            border-radius: 31px;
+            background: var(--card);
+            box-shadow: var(--shadow);
+        }
+
+        .letter p {
+            margin-bottom: 20px;
+            color: #eadfe5;
+            line-height: 2.05;
+        }
+
+        .letter .signature {
+            margin-top: 30px;
+            color: var(--rose);
+            font-size: 23px;
+        }
+
+        .mini-bar {
+            width: min(1090px, 100%);
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .mini-bar button {
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            padding: 9px 13px;
+            color: #fff;
+            background: rgba(255,255,255,0.045);
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            width: min(1090px, 100%);
+            margin: 0 auto;
+        }
+
+        .photo-card {
+            position: relative;
+            min-height: 365px;
+            overflow: hidden;
+            border: 1px solid var(--line);
+            border-radius: 23px;
+            background: #120918;
+            box-shadow: 0 18px 48px rgba(0,0,0,0.17);
+            cursor: pointer;
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+        }
+
+        .photo-card.tall {
+            min-height: 470px;
+        }
+
+        .photo-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 28px 70px rgba(0,0,0,0.30);
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 100%;
+            min-height: inherit;
+            display: block;
+            object-fit: cover;
+            transition: transform 0.8s ease, filter 0.6s ease;
+        }
+
+        .photo-card:hover img {
+            transform: scale(1.06) rotate(0.2deg);
+            filter: saturate(1.08);
+        }
+
+        .photo-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: linear-gradient(transparent 45%, rgba(0,0,0,0.76));
+        }
+
+        .photo-number {
+            position: absolute;
+            z-index: 2;
+            right: 14px;
+            bottom: 13px;
+            color: rgba(255,255,255,0.82);
+            font-size: 12px;
+            letter-spacing: 2px;
+        }
+
+        .chapter-end {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+
+        .timeline {
+            width: min(860px, 100%);
+            margin: 0 auto;
+            display: grid;
+            gap: 15px;
+        }
+
+        .memory {
+            display: grid;
+            grid-template-columns: 68px 1fr;
+            gap: 16px;
+            padding: 25px;
+            border: 1px solid var(--line);
+            border-radius: 25px;
+            background: var(--card);
+        }
+
+        .memory .number {
+            color: var(--rose);
+            font-size: 27px;
+        }
+
+        .memory h3 {
+            margin-bottom: 8px;
+            font-size: 21px;
+            font-weight: 400;
+        }
+
+        .memory p {
+            color: var(--muted);
+            line-height: 1.75;
+        }
+
+        .quiz,
+        .game,
+        .slider-box,
+        .vault {
+            width: min(850px, 100%);
+            margin: 0 auto;
+            padding: 31px;
+            border: 1px solid var(--line);
+            border-radius: 30px;
+            background: var(--card);
+            text-align: center;
+        }
+
+        .quiz-block {
+            margin-bottom: 22px;
+            padding-bottom: 22px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .quiz-block:last-of-type {
+            border-bottom: 0;
+        }
+
+        .quiz-block h3 {
+            margin-bottom: 13px;
+            font-size: 21px;
+            font-weight: 400;
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .quiz-options button {
+            padding: 13px;
+            border: 1px solid rgba(255,165,195,0.22);
+            border-radius: 15px;
+            color: #fff;
+            background: rgba(255,255,255,0.035);
+        }
+
+        .quiz-options button.selected,
+        .quiz-options button:hover {
+            background: rgba(255,95,150,0.15);
+            border-color: rgba(255,165,195,0.58);
+        }
+
+        .quiz-result {
+            display: none;
+            margin-top: 18px;
+            padding: 20px;
+            border: 1px solid rgba(255,165,195,0.22);
+            border-radius: 22px;
+            color: #f7e8ef;
+            background: rgba(255,95,150,0.08);
+            line-height: 1.85;
+        }
+
+        .match-grid {
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .match-card {
+            height: 120px;
+            border: 1px solid rgba(255,165,195,0.2);
+            border-radius: 17px;
+            color: transparent;
+            background: rgba(255,255,255,0.03);
+            font-size: 32px;
+            transition: 0.3s ease;
+        }
+
+        .match-card.flipped,
+        .match-card.matched {
+            color: #fff;
+            background: rgba(255,95,150,0.15);
+            transform: rotateY(180deg);
+        }
+
+        .status {
+            min-height: 26px;
+            margin-top: 16px;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        .hunt {
+            position: relative;
+            height: 430px;
+            overflow: hidden;
+            margin-top: 20px;
+            border: 1px solid var(--line);
+            border-radius: 25px;
+            background:
+                radial-gradient(circle at 50% 50%, rgba(255,95,150,0.14), transparent 50%),
+                #0d0813;
+        }
+
+        .hunt-heart {
+            position: absolute;
+            color: #fff;
+            font-size: 23px;
+            animation: float 2.5s ease-in-out infinite;
+            transition: 0.2s ease;
+        }
+
+        .hunt-heart:hover {
+            transform: scale(1.4);
+        }
+
+        @keyframes float {
+            0%,100% { transform: translateY(0) rotate(-7deg); }
+            50% { transform: translateY(-15px) rotate(7deg); }
+        }
+
+        .postcards {
+            grid-template-columns: repeat(2,1fr);
+        }
+
+        .postcard {
+            min-height: 225px;
+            cursor: pointer;
+        }
+
+        .postcard .hidden {
+            display: none;
+        }
+
+        .reason-wrap {
+            width: min(850px, 100%);
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .reason-display {
+            min-height: 185px;
+            display: grid;
+            place-items: center;
+            padding: 28px;
+            border: 1px solid var(--line);
+            border-radius: 28px;
+            background: var(--card);
+            color: #f9eaf0;
+            font-size: clamp(21px, 4vw, 31px);
+            line-height: 1.6;
+        }
+
+        .wheel {
+            width: min(380px, 78vw);
+            aspect-ratio: 1;
+            margin: 22px auto;
+            display: grid;
+            place-items: center;
+            border: 9px solid rgba(255,255,255,0.08);
+            border-radius: 50%;
+            background: conic-gradient(
+                #ff5f96 0deg 45deg,
+                #26102c 45deg 90deg,
+                #ff8eb2 90deg 135deg,
+                #241027 135deg 180deg,
+                #d94c84 180deg 225deg,
+                #251028 225deg 270deg,
+                #ffb1c9 270deg 315deg,
+                #241025 315deg 360deg
+            );
+            box-shadow: 0 30px 80px rgba(0,0,0,0.35);
+            transition: transform 1.2s cubic-bezier(.17,.67,.21,1);
+        }
+
+        .wheel::after {
+            content: "♡";
+            width: 76px;
+            height: 76px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            background: #0d0813;
+            font-size: 32px;
+        }
+
+        .wheel-pointer {
+            color: var(--rose);
+            font-size: 26px;
+        }
+
+        .constellation {
+            position: relative;
+            width: min(910px, 100%);
+            height: 500px;
+            margin: 0 auto;
+            overflow: hidden;
+            border: 1px solid var(--line);
+            border-radius: 28px;
+            background:
+                radial-gradient(circle at 50% 50%, rgba(255,95,150,0.12), transparent 48%),
+                #08050d;
+        }
+
+        .constellation-star {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #fff;
+            box-shadow: 0 0 17px rgba(255,255,255,0.9);
+            cursor: pointer;
+            transition: 0.25s ease;
+        }
+
+        .constellation-star.found {
+            transform: scale(1.65);
+            background: var(--rose);
+            box-shadow: 0 0 25px rgba(255,95,150,0.95);
+        }
+
+        .constellation-line {
+            position: absolute;
+            height: 1px;
+            transform-origin: left center;
+            background: rgba(255,165,195,0.35);
+            pointer-events: none;
+        }
+
+        .vault-display {
+            margin: 13px 0 23px;
+            color: var(--rose);
+            font-size: 43px;
+            letter-spacing: 8px;
+        }
+
+        .digit-grid {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 9px;
+            width: min(320px,100%);
+            margin: 0 auto;
+        }
+
+        .digit-grid button {
+            padding: 14px;
+            border: 1px solid rgba(255,165,195,0.22);
+            border-radius: 15px;
+            color: #fff;
+            background: rgba(255,255,255,0.035);
+        }
+
+        .vault-message {
+            min-height: 98px;
+            margin-top: 19px;
+            color: var(--muted);
+            line-height: 1.8;
+        }
+
+        .cake {
+            width: min(360px,85vw);
+            margin: 27px auto;
+            position: relative;
+        }
+
+        .cake-top {
+            height: 90px;
+            border-radius: 25px 25px 18px 18px;
+            background: #ff9fbd;
+            box-shadow: inset 0 -12px rgba(170,45,91,0.18);
+        }
+
+        .cake-mid {
+            width: 90%;
+            height: 75px;
+            margin: -1px auto 0;
+            border-radius: 0 0 18px 18px;
+            background: #f5c7d7;
+        }
+
+        .cake-base {
+            width: 78%;
+            height: 68px;
+            margin: -1px auto 0;
+            border-radius: 0 0 18px 18px;
+            background: #e08cae;
+        }
+
+        .candles {
+            display: flex;
+            justify-content: center;
+            gap: 28px;
+            margin-bottom: -4px;
+        }
+
+        .candle {
+            position: relative;
+            width: 13px;
+            height: 50px;
+            border-radius: 9px 9px 4px 4px;
+            background: #fff;
+            cursor: pointer;
+        }
+
+        .flame {
+            position: absolute;
+            left: 50%;
+            top: -25px;
+            width: 17px;
+            height: 25px;
+            transform: translateX(-50%);
+            border-radius: 70% 30% 70% 30%;
+            background: #ffd66d;
+            box-shadow: 0 0 22px rgba(255,214,109,0.8);
+            animation: flame 0.85s infinite ease-in-out;
+        }
+
+        .candle.out .flame {
+            display: none;
+        }
+
+        @keyframes flame {
+            0%,100% { transform: translateX(-50%) rotate(-5deg) scale(0.95); }
+            50% { transform: translateX(-50%) rotate(5deg) scale(1.07); }
+        }
+
+        .counter {
+            margin-top: 12px;
+            color: var(--muted);
+        }
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 18px;
+            background: rgba(0,0,0,0.90);
+        }
+
+        .modal.open {
+            display: flex;
+        }
+
+        .modal img {
+            max-width: 94vw;
+            max-height: 87vh;
+            border-radius: 22px;
+            box-shadow: 0 30px 100px rgba(0,0,0,0.65);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 14px;
+            right: 22px;
+            color: #fff;
+            font-size: 39px;
+            cursor: pointer;
+        }
+
+        .toast {
+            position: fixed;
+            left: 50%;
+            bottom: 35px;
+            z-index: 220;
+            max-width: 90%;
+            transform: translate(-50%, 18px);
+            opacity: 0;
+            padding: 12px 17px;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            color: #fff;
+            background: rgba(8,4,13,0.90);
+            transition: 0.3s ease;
+            text-align: center;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translate(-50%,0);
+        }
+
+        .final {
+            min-height: 75vh;
+            display: grid;
+            place-items: center;
+            text-align: center;
+        }
+
+        .final-inner {
+            width: min(830px,100%);
+        }
+
+        .final-heart {
+            display: inline-block;
+            margin-bottom: 12px;
+            color: var(--rose);
+            font-size: 84px;
+            animation: pulse 1.35s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%,100% { transform: scale(1); }
+            50% { transform: scale(1.18); }
+        }
+
+        .final h2 {
+            font-size: clamp(45px,8vw,84px);
+            font-weight: 400;
+        }
+
+        .final p {
+            max-width: 680px;
+            margin: 18px auto 0;
+            color: var(--muted);
+            line-height: 1.95;
+        }
+
+        @media (max-width: 960px) {
+            .photo-grid {
+                grid-template-columns: repeat(2,1fr);
+            }
+
+            .intro-grid,
+            .map-grid,
+            .reasons-grid {
+                grid-template-columns: repeat(2,1fr);
+            }
+        }
+
+        @media (max-width: 620px) {
+            .topbar {
+                width: 97%;
+                top: 7px;
+            }
+
+            .page {
+                padding: 99px 13px 70px;
+            }
+
+            .intro-grid,
+            .map-grid,
+            .reasons-grid,
+            .postcards {
+                grid-template-columns: 1fr;
+            }
+
+            .photo-grid {
+                grid-template-columns: repeat(2,1fr);
+                gap: 8px;
+            }
+
+            .photo-card,
+            .photo-card.tall {
+                min-height: 285px;
+            }
+
+            .photo-number {
+                right: 10px;
+                bottom: 10px;
+            }
+
+            .letter,
+            .quiz,
+            .game,
+            .slider-box,
+            .vault {
+                padding: 24px;
+            }
+
+            .quiz-options {
+                grid-template-columns: 1fr;
+            }
+
+            .match-grid {
+                grid-template-columns: repeat(3,1fr);
+            }
+
+            .match-card {
+                height: 88px;
+            }
+
+            .hunt {
+                height: 390px;
+            }
+
+            .constellation {
+                height: 425px;
+            }
+
+            .mini-bar {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .photo-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .photo-card,
+            .photo-card.tall {
+                min-height: 385px;
+            }
+
+            h1 {
+                letter-spacing: -3px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="stars"></div>
+    <canvas id="heartCanvas"></canvas>
+
+    <header class="topbar">
+        <div class="nav-scroll">
+            <button class="nav-btn" data-page="home">Home</button>
+            <button class="nav-btn" data-page="welcome">Begin</button>
+            <button class="nav-btn" data-page="map">Map</button>
+            <button class="nav-btn" data-page="story">Story</button>
+            <button class="nav-btn" data-page="group-details">Tiny Details</button><button class="nav-btn" data-page="group-selfies">Selfie Season</button><button class="nav-btn" data-page="group-mono">Monochrome Mood</button><button class="nav-btn" data-page="group-blue">Blue Day Diaries</button><button class="nav-btn" data-page="group-portraits">Portrait Hours</button><button class="nav-btn" data-page="group-us">Us</button><button class="nav-btn" data-page="group-posed">Pretty &amp; Posed</button><button class="nav-btn" data-page="group-family">Family Frames</button><button class="nav-btn" data-page="group-random">Random Little Memories</button><button class="nav-btn" data-page="group-usagain">Us, Again</button>
+            <button class="nav-btn" data-page="quiz">Quiz</button>
+            <button class="nav-btn" data-page="games">Arcade</button>
+            <button class="nav-btn" data-page="hunt">Heart Hunt</button>
+            <button class="nav-btn" data-page="reasons">Reasons</button>
+            <button class="nav-btn" data-page="future">Future</button>
+            <button class="nav-btn" data-page="stars-page">Stars</button>
+            <button class="nav-btn" data-page="cake">Cake</button>
+            <button class="nav-btn" data-page="vault">Vault</button>
+            <button class="nav-btn" data-page="final">Final</button>
+        </div>
+
+        <button class="music-btn" id="musicButton">♫ Music</button>
+    </header>
+
+    <div class="progress-shell">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <main>
+        <section class="page active" id="home">
+            <div class="hero wrap">
+                <div class="hero-card">
+                    <div class="kicker">A little universe made for</div>
+                    <h1>Devi</h1>
+
+                    <h2>Happy Birthday, Mge Sosa Malaa ♡</h2>
+
+                    <p>
+                        This is not just one page.
+                        It is a small universe with memories, games, secrets, random chaos,
+                        little romantic things and one final page.
+                    </p>
+
+                    <button class="cta" onclick="go('welcome')">
+                        Start exploring ✦
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="page" id="welcome">
+            <div class="wrap">
+                <div class="title">
+                    <div class="kicker">Rule number one</div>
+                    <h2>Don't rush.</h2>
+                    <p>
+                        There are a lot of little doors on this website.
+                        E nisa hemit balanna ithim.
+                    </p>
+                </div>
+
+                <div class="intro-grid">
+                    <div class="intro-card" onclick="go('map')">
+                        <div class="icon">🗺️</div>
+                        <h3>The map</h3>
+                        <p>Api dennage kathawa.</p>
+                    </div>
+
+                    <div class="intro-card" onclick="go('story')">
+                        <div class="icon">♡</div>
+                        <h3>The slow page</h3>
+                        <p>Mekath hemit kiyawala ynna.</p>
+                    </div>
+
+                    <div class="intro-card" onclick="go('quiz')">
+                        <div class="icon">😌</div>
+                        <h3>The quiz</h3>
+                        <p>Me tikatath uththara dennako ehenm.</p>
+                    </div>
+
+                    <div class="intro-card" onclick="go('games')">
+                        <div class="icon">🎮</div>
+                        <h3>The arcade</h3>
+                        <p>Enna sellumak krnna.</p>
+                    </div>
+
+                    <div class="intro-card" onclick="go('hunt')">
+                        <div class="icon">💗</div>
+                        <h3>Heart Hunt</h3>
+                        <p>Thawa ekk thiyenawa.</p>
+                    </div>
+
+                    <div class="intro-card" onclick="go('reasons')">
+                        <div class="icon">✨</div>
+                        <h3>The reason machine</h3>
+                        <p>Hina welama inna one halid.</p>
+                    </div>
+
+                    <div class="intro-card" onclick="go('future')">
+                        <div class="icon">✉️</div>
+                        <h3>Future postcards</h3>
+                        <p>Mewath kawada hri dawasak wei ne.</p>
+                    </div>
+
+                    <div class="intro-card" onclick="go('stars-page')">
+                        <div class="icon">✦</div>
+                        <h3>The constellation</h3>
+                        <p>Kammali kamat thawa ekk haduwa.</p>
+                    </div>
+
+                    <div class="intro-card" onclick="go('cake')">
+                        <div class="icon">🎂</div>
+                        <h3>The birthday cake</h3>
+                        <p>Mehema hri cake ekk kapamu ithim.</p>
+                    </div>
+
+                    <div class="intro-card" onclick="go('vault')">
+                        <div class="icon">🔐</div>
+                        <h3>The secret vault</h3>
+                        <p>Rahasak.</p>
+                    </div>
+
+                    <div class="intro-card" onclick="go('final')">
+                        <div class="icon">∞</div>
+                        <h3>The final page</h3>
+                        <p>Anthimet mekath blnna.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="page" id="map">
+            <div class="wrap">
+                <div class="title">
+                    <div class="kicker">Choose a door</div>
+                    <h2>The Memory Map</h2>
+                    <p>
+                        The photographs have been grouped visually so similar moments stay together.
+                        Nothing was removed.
+                    </p>
+                </div>
+
+                <div class="map-grid">
+                    
+                    <div class="map-card" onclick="go('group-details')">
+                        <div class="map-number">01–03</div>
+                        <h3>Tiny Details</h3>
+                        <p>The tiny frames that started the collection.</p>
+                        <span>Open chapter ↗</span>
+                    </div>
+                    <div class="map-card" onclick="go('group-selfies')">
+                        <div class="map-number">04–20</div>
+                        <h3>Selfie Season</h3>
+                        <p>Mirrors, smiles, random camera-open-at-the-worst-time moments.</p>
+                        <span>Open chapter ↗</span>
+                    </div>
+                    <div class="map-card" onclick="go('group-mono')">
+                        <div class="map-number">21–25</div>
+                        <h3>Monochrome Mood</h3>
+                        <p>A softer, quieter little corner.</p>
+                        <span>Open chapter ↗</span>
+                    </div>
+                    <div class="map-card" onclick="go('group-blue')">
+                        <div class="map-number">26–35</div>
+                        <h3>Blue Day Diaries</h3>
+                        <p>Blue outfits, green backgrounds and casual little days.</p>
+                        <span>Open chapter ↗</span>
+                    </div>
+                    <div class="map-card" onclick="go('group-portraits')">
+                        <div class="map-number">36–58</div>
+                        <h3>Portrait Hours</h3>
+                        <p>The portrait wall. Different moods, same person.</p>
+                        <span>Open chapter ↗</span>
+                    </div>
+                    <div class="map-card" onclick="go('group-us')">
+                        <div class="map-number">59–68</div>
+                        <h3>Us</h3>
+                        <p>The chapter where the camera starts finding two people in the same frame.</p>
+                        <span>Open chapter ↗</span>
+                    </div>
+                    <div class="map-card" onclick="go('group-posed')">
+                        <div class="map-number">69–75</div>
+                        <h3>Pretty &amp; Posed</h3>
+                        <p>Dress-up moments and photographs that deserved their own page.</p>
+                        <span>Open chapter ↗</span>
+                    </div>
+                    <div class="map-card" onclick="go('group-family')">
+                        <div class="map-number">76–78</div>
+                        <h3>Family Frames</h3>
+                        <p>A few people who belong in the story too.</p>
+                        <span>Open chapter ↗</span>
+                    </div>
+                    <div class="map-card" onclick="go('group-random')">
+                        <div class="map-number">79–80</div>
+                        <h3>Random Little Memories</h3>
+                        <p>Because not every favourite memory needs to make sense.</p>
+                        <span>Open chapter ↗</span>
+                    </div>
+                    <div class="map-card" onclick="go('group-usagain')">
+                        <div class="map-number">81–90</div>
+                        <h3>Us, Again</h3>
+                        <p>One more round of smiles, chaos and togetherness.</p>
+                        <span>Open chapter ↗</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="page" id="story">
+            <div class="wrap">
+                <div class="title">
+                    <div class="kicker">A slower page</div>
+                    <h2>Our little story</h2>
+                    <p>Read this one without trying to find the next button immediately.</p>
+                </div>
+
+                <div class="letter">
+                    <p>Devi,</p>
+
+                    <p>
+                        Some memories become special because something enormous happened.
+                        Other memories become special for absolutely no obvious reason.
+                        A random picture.
+                        A ridiculous joke.
+                        A normal afternoon.
+                        A look that lasted for half a second.
+                    </p>
+
+                    <p>
+                        This website is made from those little things.
+                        Not one giant event.
+                        Just dozens of tiny moments that somehow became important enough to keep.
+                    </p>
+
+                    <p>
+                        I hope this birthday gives you more reasons to smile,
+                        more things to look forward to,
+                        more places to see,
+                        more people who make you laugh,
+                        and more days that feel worth remembering.
+                    </p>
+
+                    <p>
+                        And somewhere between the serious plans and completely random chaos,
+                        I hope there are many more photographs waiting to happen.
+                    </p>
+
+                    <p>
+                        Also, after seeing how many photos made it into this website,
+                        I think the camera roll deserves a small apology.
+                    </p>
+
+                    <p class="signature">
+                        Happy Birthday, Devi. ♡
+                    </p>
+                </div>
+
+                <div style="height:28px;"></div>
+
+                <div class="timeline">
+                    <div class="memory">
+                        <div class="number">01</div>
+                        <div>
+                            <h3>The little things</h3>
+                            <p>Podi podi dewaluth hrima lassanai.</p>
+                        </div>
+                    </div>
+
+                    <div class="memory">
+                        <div class="number">02</div>
+                        <div>
+                            <h3>The camera-open-at-random moments</h3>
+                            <p>Samaharak hithanne nathuw gaththa ewath harima lassanai ned.</p>
+                        </div>
+                    </div>
+
+                    <div class="memory">
+                        <div class="number">03</div>
+                        <div>
+                            <h3>The us moments</h3>
+                            <p>Api denna inna photos harima lassanai ned.</p>
+                        </div>
+                    </div>
+
+                    <div class="memory">
+                        <div class="number">04</div>
+                        <div>
+                            <h3>The next chapters</h3>
+                            <p>Meka ikmnt iwara wewi hemit ynna.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        
+        <section class="page" id="group-details">
+            <div class="wrap">
+                <div class="title">
+                    <div class="kicker">Memory chapter</div>
+                    <h2>Tiny Details</h2>
+                    <p>The tiny frames that started the collection.</p>
+                </div>
+                <div class="mini-bar">
+                    <span>Photos 01–03</span>
+                    <button onclick="shuffleChapter('group-details')">Shuffle the chapter ✦</button>
+                </div>
+                <div class="photo-grid chapter-photos">
+                    
+                        <article class="photo-card tall" data-photo="01.jpg">
+                            <img src="photos/01.jpg" alt="Photo 1" loading="lazy">
+                            <div class="photo-number">01</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="02.jpg">
+                            <img src="photos/02.jpg" alt="Photo 2" loading="lazy">
+                            <div class="photo-number">02</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="03.jpg">
+                            <img src="photos/03.jpg" alt="Photo 3" loading="lazy">
+                            <div class="photo-number">03</div>
+                        </article>
+                </div>
+                <div class="chapter-end">
+                    <button class="ghost-btn" onclick="go('map')">Back to the map</button>
+                    <button class="ghost-btn" onclick="nextChapter('details')">Next little chapter →</button>
+                </div>
+            </div>
+        </section>
+        <section class="page" id="group-selfies">
+            <div class="wrap">
+                <div class="title">
+                    <div class="kicker">Memory chapter</div>
+                    <h2>Selfie Season</h2>
+                    <p>Mirrors, smiles, random camera-open-at-the-worst-time moments.</p>
+                </div>
+                <div class="mini-bar">
+                    <span>Photos 04–20</span>
+                    <button onclick="shuffleChapter('group-selfies')">Shuffle the chapter ✦</button>
+                </div>
+                <div class="photo-grid chapter-photos">
+                    
+                        <article class="photo-card tall" data-photo="04.jpg">
+                            <img src="photos/04.jpg" alt="Photo 4" loading="lazy">
+                            <div class="photo-number">04</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="05.jpg">
+                            <img src="photos/05.jpg" alt="Photo 5" loading="lazy">
+                            <div class="photo-number">05</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="06.jpg">
+                            <img src="photos/06.jpg" alt="Photo 6" loading="lazy">
+                            <div class="photo-number">06</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="07.jpg">
+                            <img src="photos/07.jpg" alt="Photo 7" loading="lazy">
+                            <div class="photo-number">07</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="08.jpg">
+                            <img src="photos/08.jpg" alt="Photo 8" loading="lazy">
+                            <div class="photo-number">08</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="09.jpg">
+                            <img src="photos/09.jpg" alt="Photo 9" loading="lazy">
+                            <div class="photo-number">09</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="10.jpg">
+                            <img src="photos/10.jpg" alt="Photo 10" loading="lazy">
+                            <div class="photo-number">10</div>
+                        </article>
+
+                        <article class="photo-card tall" data-photo="11.jpg">
+                            <img src="photos/11.jpg" alt="Photo 11" loading="lazy">
+                            <div class="photo-number">11</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="12.jpg">
+                            <img src="photos/12.jpg" alt="Photo 12" loading="lazy">
+                            <div class="photo-number">12</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="13.jpg">
+                            <img src="photos/13.jpg" alt="Photo 13" loading="lazy">
+                            <div class="photo-number">13</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="14.jpg">
+                            <img src="photos/14.jpg" alt="Photo 14" loading="lazy">
+                            <div class="photo-number">14</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="15.jpg">
+                            <img src="photos/15.jpg" alt="Photo 15" loading="lazy">
+                            <div class="photo-number">15</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="16.jpg">
+                            <img src="photos/16.jpg" alt="Photo 16" loading="lazy">
+                            <div class="photo-number">16</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="17.jpg">
+                            <img src="photos/17.jpg" alt="Photo 17" loading="lazy">
+                            <div class="photo-number">17</div>
+                        </article>
+
+                        <article class="photo-card tall" data-photo="18.jpg">
+                            <img src="photos/18.jpg" alt="Photo 18" loading="lazy">
+                            <div class="photo-number">18</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="19.jpg">
+                            <img src="photos/19.jpg" alt="Photo 19" loading="lazy">
+                            <div class="photo-number">19</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="20.jpg">
+                            <img src="photos/20.jpg" alt="Photo 20" loading="lazy">
+                            <div class="photo-number">20</div>
+                        </article>
+                </div>
+                <div class="chapter-end">
+                    <button class="ghost-btn" onclick="go('map')">Back to the map</button>
+                    <button class="ghost-btn" onclick="nextChapter('selfies')">Next little chapter →</button>
+                </div>
+            </div>
+        </section>
+        <section class="page" id="group-mono">
+            <div class="wrap">
+                <div class="title">
+                    <div class="kicker">Memory chapter</div>
+                    <h2>Monochrome Mood</h2>
+                    <p>A softer, quieter little corner.</p>
+                </div>
+                <div class="mini-bar">
+                    <span>Photos 21–25</span>
+                    <button onclick="shuffleChapter('group-mono')">Shuffle the chapter ✦</button>
+                </div>
+                <div class="photo-grid chapter-photos">
+                    
+                        <article class="photo-card tall" data-photo="21.jpg">
+                            <img src="photos/21.jpg" alt="Photo 21" loading="lazy">
+                            <div class="photo-number">21</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="22.jpg">
+                            <img src="photos/22.jpg" alt="Photo 22" loading="lazy">
+                            <div class="photo-number">22</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="23.jpg">
+                            <img src="photos/23.jpg" alt="Photo 23" loading="lazy">
+                            <div class="photo-number">23</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="24.jpg">
+                            <img src="photos/24.jpg" alt="Photo 24" loading="lazy">
+                            <div class="photo-number">24</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="25.jpg">
+                            <img src="photos/25.jpg" alt="Photo 25" loading="lazy">
+                            <div class="photo-number">25</div>
+                        </article>
+                </div>
+                <div class="chapter-end">
+                    <button class="ghost-btn" onclick="go('map')">Back to the map</button>
+                    <button class="ghost-btn" onclick="nextChapter('mono')">Next little chapter →</button>
+                </div>
+            </div>
+        </section>
+        <section class="page" id="group-blue">
+            <div class="wrap">
+                <div class="title">
+                    <div class="kicker">Memory chapter</div>
+                    <h2>Blue Day Diaries</h2>
+                    <p>Blue outfits, green backgrounds and casual little days.</p>
+                </div>
+                <div class="mini-bar">
+                    <span>Photos 26–35</span>
+                    <button onclick="shuffleChapter('group-blue')">Shuffle the chapter ✦</button>
+                </div>
+                <div class="photo-grid chapter-photos">
+                    
+                        <article class="photo-card tall" data-photo="26.jpg">
+                            <img src="photos/26.jpg" alt="Photo 26" loading="lazy">
+                            <div class="photo-number">26</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="27.jpg">
+                            <img src="photos/27.jpg" alt="Photo 27" loading="lazy">
+                            <div class="photo-number">27</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="28.jpg">
+                            <img src="photos/28.jpg" alt="Photo 28" loading="lazy">
+                            <div class="photo-number">28</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="29.jpg">
+                            <img src="photos/29.jpg" alt="Photo 29" loading="lazy">
+                            <div class="photo-number">29</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="30.jpg">
+                            <img src="photos/30.jpg" alt="Photo 30" loading="lazy">
+                            <div class="photo-number">30</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="31.jpg">
+                            <img src="photos/31.jpg" alt="Photo 31" loading="lazy">
+                            <div class="photo-number">31</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="32.jpg">
+                            <img src="photos/32.jpg" alt="Photo 32" loading="lazy">
+                            <div class="photo-number">32</div>
+                        </article>
+
+                        <article class="photo-card tall" data-photo="33.jpg">
+                            <img src="photos/33.jpg" alt="Photo 33" loading="lazy">
+                            <div class="photo-number">33</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="34.jpg">
+                            <img src="photos/34.jpg" alt="Photo 34" loading="lazy">
+                            <div class="photo-number">34</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="35.jpg">
+                            <img src="photos/35.jpg" alt="Photo 35" loading="lazy">
+                            <div class="photo-number">35</div>
+                        </article>
+                </div>
+                <div class="chapter-end">
+                    <button class="ghost-btn" onclick="go('map')">Back to the map</button>
+                    <button class="ghost-btn" onclick="nextChapter('blue')">Next little chapter →</button>
+                </div>
+            </div>
+        </section>
+        <section class="page" id="group-portraits">
+            <div class="wrap">
+                <div class="title">
+                    <div class="kicker">Memory chapter</div>
+                    <h2>Portrait Hours</h2>
+                    <p>The portrait wall. Different moods, same person.</p>
+                </div>
+                <div class="mini-bar">
+                    <span>Photos 36–58</span>
+                    <button onclick="shuffleChapter('group-portraits')">Shuffle the chapter ✦</button>
+                </div>
+                <div class="photo-grid chapter-photos">
+                    
+                        <article class="photo-card tall" data-photo="36.jpg">
+                            <img src="photos/36.jpg" alt="Photo 36" loading="lazy">
+                            <div class="photo-number">36</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="37.jpg">
+                            <img src="photos/37.jpg" alt="Photo 37" loading="lazy">
+                            <div class="photo-number">37</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="38.jpg">
+                            <img src="photos/38.jpg" alt="Photo 38" loading="lazy">
+                            <div class="photo-number">38</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="39.jpg">
+                            <img src="photos/39.jpg" alt="Photo 39" loading="lazy">
+                            <div class="photo-number">39</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="40.jpg">
+                            <img src="photos/40.jpg" alt="Photo 40" loading="lazy">
+                            <div class="photo-number">40</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="41.jpg">
+                            <img src="photos/41.jpg" alt="Photo 41" loading="lazy">
+                            <div class="photo-number">41</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="42.jpg">
+                            <img src="photos/42.jpg" alt="Photo 42" loading="lazy">
+                            <div class="photo-number">42</div>
+                        </article>
+
+                        <article class="photo-card tall" data-photo="43.jpg">
+                            <img src="photos/43.jpg" alt="Photo 43" loading="lazy">
+                            <div class="photo-number">43</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="44.jpg">
+                            <img src="photos/44.jpg" alt="Photo 44" loading="lazy">
+                            <div class="photo-number">44</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="45.jpg">
+                            <img src="photos/45.jpg" alt="Photo 45" loading="lazy">
+                            <div class="photo-number">45</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="46.jpg">
+                            <img src="photos/46.jpg" alt="Photo 46" loading="lazy">
+                            <div class="photo-number">46</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="47.jpg">
+                            <img src="photos/47.jpg" alt="Photo 47" loading="lazy">
+                            <div class="photo-number">47</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="48.jpg">
+                            <img src="photos/48.jpg" alt="Photo 48" loading="lazy">
+                            <div class="photo-number">48</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="49.jpg">
+                            <img src="photos/49.jpg" alt="Photo 49" loading="lazy">
+                            <div class="photo-number">49</div>
+                        </article>
+
+                        <article class="photo-card tall" data-photo="50.jpg">
+                            <img src="photos/50.jpg" alt="Photo 50" loading="lazy">
+                            <div class="photo-number">50</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="51.jpg">
+                            <img src="photos/51.jpg" alt="Photo 51" loading="lazy">
+                            <div class="photo-number">51</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="52.jpg">
+                            <img src="photos/52.jpg" alt="Photo 52" loading="lazy">
+                            <div class="photo-number">52</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="53.jpg">
+                            <img src="photos/53.jpg" alt="Photo 53" loading="lazy">
+                            <div class="photo-number">53</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="54.jpg">
+                            <img src="photos/54.jpg" alt="Photo 54" loading="lazy">
+                            <div class="photo-number">54</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="55.jpg">
+                            <img src="photos/55.jpg" alt="Photo 55" loading="lazy">
+                            <div class="photo-number">55</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="56.jpg">
+                            <img src="photos/56.jpg" alt="Photo 56" loading="lazy">
+                            <div class="photo-number">56</div>
+                        </article>
+
+                        <article class="photo-card tall" data-photo="57.jpg">
+                            <img src="photos/57.jpg" alt="Photo 57" loading="lazy">
+                            <div class="photo-number">57</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="58.jpg">
+                            <img src="photos/58.jpg" alt="Photo 58" loading="lazy">
+                            <div class="photo-number">58</div>
+                        </article>
+                </div>
+                <div class="chapter-end">
+                    <button class="ghost-btn" onclick="go('map')">Back to the map</button>
+                    <button class="ghost-btn" onclick="nextChapter('portraits')">Next little chapter →</button>
+                </div>
+            </div>
+        </section>
+        <section class="page" id="group-us">
+            <div class="wrap">
+                <div class="title">
+                    <div class="kicker">Memory chapter</div>
+                    <h2>Us</h2>
+                    <p>The chapter where the camera starts finding two people in the same frame.</p>
+                </div>
+                <div class="mini-bar">
+                    <span>Photos 59–68</span>
+                    <button onclick="shuffleChapter('group-us')">Shuffle the chapter ✦</button>
+                </div>
+                <div class="photo-grid chapter-photos">
+                    
+                        <article class="photo-card tall" data-photo="59.jpg">
+                            <img src="photos/59.jpg" alt="Photo 59" loading="lazy">
+                            <div class="photo-number">59</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="60.jpg">
+                            <img src="photos/60.jpg" alt="Photo 60" loading="lazy">
+                            <div class="photo-number">60</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="61.jpg">
+                            <img src="photos/61.jpg" alt="Photo 61" loading="lazy">
+                            <div class="photo-number">61</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="62.jpg">
+                            <img src="photos/62.jpg" alt="Photo 62" loading="lazy">
+                            <div class="photo-number">62</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="63.jpg">
+                            <img src="photos/63.jpg" alt="Photo 63" loading="lazy">
+                            <div class="photo-number">63</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="64.jpg">
+                            <img src="photos/64.jpg" alt="Photo 64" loading="lazy">
+                            <div class="photo-number">64</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="65.jpg">
+                            <img src="photos/65.jpg" alt="Photo 65" loading="lazy">
+                            <div class="photo-number">65</div>
+                        </article>
+
+                        <article class="photo-card tall" data-photo="66.jpg">
+                            <img src="photos/66.jpg" alt="Photo 66" loading="lazy">
+                            <div class="photo-number">66</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="67.jpg">
+                            <img src="photos/67.jpg" alt="Photo 67" loading="lazy">
+                            <div class="photo-number">67</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="68.jpg">
+                            <img src="photos/68.jpg" alt="Photo 68" loading="lazy">
+                            <div class="photo-number">68</div>
+                        </article>
+                </div>
+                <div class="chapter-end">
+                    <button class="ghost-btn" onclick="go('map')">Back to the map</button>
+                    <button class="ghost-btn" onclick="nextChapter('us')">Next little chapter →</button>
+                </div>
+            </div>
+        </section>
+        <section class="page" id="group-posed">
+            <div class="wrap">
+                <div class="title">
+                    <div class="kicker">Memory chapter</div>
+                    <h2>Pretty &amp; Posed</h2>
+                    <p>Dress-up moments and photographs that deserved their own page.</p>
+                </div>
+                <div class="mini-bar">
+                    <span>Photos 69–75</span>
+                    <button onclick="shuffleChapter('group-posed')">Shuffle the chapter ✦</button>
+                </div>
+                <div class="photo-grid chapter-photos">
+                    
+                        <article class="photo-card tall" data-photo="69.jpg">
+                            <img src="photos/69.jpg" alt="Photo 69" loading="lazy">
+                            <div class="photo-number">69</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="70.jpg">
+                            <img src="photos/70.jpg" alt="Photo 70" loading="lazy">
+                            <div class="photo-number">70</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="71.jpg">
+                            <img src="photos/71.jpg" alt="Photo 71" loading="lazy">
+                            <div class="photo-number">71</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="72.jpg">
+                            <img src="photos/72.jpg" alt="Photo 72" loading="lazy">
+                            <div class="photo-number">72</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="73.jpg">
+                            <img src="photos/73.jpg" alt="Photo 73" loading="lazy">
+                            <div class="photo-number">73</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="74.jpg">
+                            <img src="photos/74.jpg" alt="Photo 74" loading="lazy">
+                            <div class="photo-number">74</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="75.jpg">
+                            <img src="photos/75.jpg" alt="Photo 75" loading="lazy">
+                            <div class="photo-number">75</div>
+                        </article>
+                </div>
+                <div class="chapter-end">
+                    <button class="ghost-btn" onclick="go('map')">Back to the map</button>
+                    <button class="ghost-btn" onclick="nextChapter('posed')">Next little chapter →</button>
+                </div>
+            </div>
+        </section>
+        <section class="page" id="group-family">
+            <div class="wrap">
+                <div class="title">
+                    <div class="kicker">Memory chapter</div>
+                    <h2>Family Frames</h2>
+                    <p>A few people who belong in the story too.</p>
+                </div>
+                <div class="mini-bar">
+                    <span>Photos 76–78</span>
+                    <button onclick="shuffleChapter('group-family')">Shuffle the chapter ✦</button>
+                </div>
+                <div class="photo-grid chapter-photos">
+                    
+                        <article class="photo-card tall" data-photo="76.jpg">
+                            <img src="photos/76.jpg" alt="Photo 76" loading="lazy">
+                            <div class="photo-number">76</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="77.jpg">
+                            <img src="photos/77.jpg" alt="Photo 77" loading="lazy">
+                            <div class="photo-number">77</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="78.jpg">
+                            <img src="photos/78.jpg" alt="Photo 78" loading="lazy">
+                            <div class="photo-number">78</div>
+                        </article>
+                </div>
+                <div class="chapter-end">
+                    <button class="ghost-btn" onclick="go('map')">Back to the map</button>
+                    <button class="ghost-btn" onclick="nextChapter('family')">Next little chapter →</button>
+                </div>
+            </div>
+        </section>
+        <section class="page" id="group-random">
+            <div class="wrap">
+                <div class="title">
+                    <div class="kicker">Memory chapter</div>
+                    <h2>Random Little Memories</h2>
+                    <p>Because not every favourite memory needs to make sense.</p>
+                </div>
+                <div class="mini-bar">
+                    <span>Photos 79–80</span>
+                    <button onclick="shuffleChapter('group-random')">Shuffle the chapter ✦</button>
+                </div>
+                <div class="photo-grid chapter-photos">
+                    
+                        <article class="photo-card tall" data-photo="79.jpg">
+                            <img src="photos/79.jpg" alt="Photo 79" loading="lazy">
+                            <div class="photo-number">79</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="80.jpg">
+                            <img src="photos/80.jpg" alt="Photo 80" loading="lazy">
+                            <div class="photo-number">80</div>
+                        </article>
+                </div>
+                <div class="chapter-end">
+                    <button class="ghost-btn" onclick="go('map')">Back to the map</button>
+                    <button class="ghost-btn" onclick="nextChapter('random')">Next little chapter →</button>
+                </div>
+            </div>
+        </section>
+        <section class="page" id="group-usagain">
+            <div class="wrap">
+                <div class="title">
+                    <div class="kicker">Memory chapter</div>
+                    <h2>Us, Again</h2>
+                    <p>One more round of smiles, chaos and togetherness.</p>
+                </div>
+                <div class="mini-bar">
+                    <span>Photos 81–90</span>
+                    <button onclick="shuffleChapter('group-usagain')">Shuffle the chapter ✦</button>
+                </div>
+                <div class="photo-grid chapter-photos">
+                    
+                        <article class="photo-card tall" data-photo="81.jpg">
+                            <img src="photos/81.jpg" alt="Photo 81" loading="lazy">
+                            <div class="photo-number">81</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="82.jpg">
+                            <img src="photos/82.jpg" alt="Photo 82" loading="lazy">
+                            <div class="photo-number">82</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="83.jpg">
+                            <img src="photos/83.jpg" alt="Photo 83" loading="lazy">
+                            <div class="photo-number">83</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="84.jpg">
+                            <img src="photos/84.jpg" alt="Photo 84" loading="lazy">
+                            <div class="photo-number">84</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="85.jpg">
+                            <img src="photos/85.jpg" alt="Photo 85" loading="lazy">
+                            <div class="photo-number">85</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="86.jpg">
+                            <img src="photos/86.jpg" alt="Photo 86" loading="lazy">
+                            <div class="photo-number">86</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="87.jpg">
+                            <img src="photos/87.jpg" alt="Photo 87" loading="lazy">
+                            <div class="photo-number">87</div>
+                        </article>
+
+                        <article class="photo-card tall" data-photo="88.jpg">
+                            <img src="photos/88.jpg" alt="Photo 88" loading="lazy">
+                            <div class="photo-number">88</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="89.jpg">
+                            <img src="photos/89.jpg" alt="Photo 89" loading="lazy">
+                            <div class="photo-number">89</div>
+                        </article>
+
+                        <article class="photo-card" data-photo="90.jpg">
+                            <img src="photos/90.jpg" alt="Photo 90" loading="lazy">
+                            <div class="photo-number">90</div>
+                        </article>
+                </div>
+                <div class="chapter-end">
+                    <button class="ghost-btn" onclick="go('map')">Back to the map</button>
+                    <button class="ghost-btn" onclick="nextChapter('usagain')">Next little chapter →</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="page" id="quiz">
+            <div class="wrap">
+                <div class="title">
+                    <div class="kicker">Very serious research</div>
+                    <h2>How well do you know this chaos?</h2>
+                    <p>No wrong answers. Some answers are just funnier than others.</p>
+                </div>
+
+                <div class="quiz">
+                    <div class="quiz-block">
+                        <h3>1. Api thawa ekathu krnna one monawad?</h3>
+                        <div class="quiz-options">
+                            <button>Lassana photos 📸</button>
+                            <button>Thawa experiances ✈️</button>
+                            <button>Thawa katha 🌙</button>
+                            <button>E okkoma♡</button>
+                        </div>
+                    </div>
+
+                    <div class="quiz-block">
+                        <h3>2. Api denna krnnama one de.</h3>
+                        <div class="quiz-options">
+                            <button>Food + movies 🍿</button>
+                            <button>Random road trip 🚗</button>
+                            <button>You know this 🤭👉👈</button>
+                            <button>Whatever happens ♡</button>
+                        </div>
+                    </div>
+
+                    <div class="quiz-block">
+                        <h3>3. Mata adaleid? 👀</h3>
+                        <div class="quiz-options">
+                            <button>Obviously ♡</button>
+                            <button>Maybe a little 😌</button>
+                            <button>Ask again tomorrow</button>
+                            <button>Very, very much ♡</button>
+                        </div>
+                    </div>
+
+                    <button class="cta" onclick="finishQuiz()">Reveal the result</button>
+
+                    <div class="quiz-result" id="quizResult"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="page" id="games">
+            <div class="wrap">
+                <div class="title">
+                    <div class="kicker">The arcade</div>
+                    <h2>Play until the page runs out of excuses.</h2>
+                    <p>There are three little games hidden on this page.</p>
+                </div>
+
+                <div class="game" style="margin-bottom:18px;">
+                    <h3>Memory Match</h3>
+                    <p>Find all eight pairs.</p>
+
+                    <div class="match-grid" id="matchGrid"></div>
+                    <div class="status" id="matchStatus">Pairs found: 0 / 8</div>
+
+                    <button class="cta" onclick="startMatch()">
+                        Shuffle again
+                    </button>
+                </div>
+
+                <div class="game">
+                    <h3>Photo Roulette</h3>
+                    <p>Let the website choose one of the 90 memories for you.</p>
+
+                    <div class="reason-display" id="rouletteText">
+                        Press the button. I promise it has no idea what it is doing.
+                    </div>
+
+                    <button class="cta" onclick="photoRoulette()">
+                        Choose a memory ♡
+                    </button>
+
+                    <button class="ghost-btn" onclick="randomPhotoOpen()">
+                        Open the chosen photo
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="page" id="hunt">
+            <div class="wrap">
+                <div class="title">
+                    <div class="kicker">Something is hiding</div>
+                    <h2>Heart Hunt</h2>
+                    <p>Five hearts are hiding somewhere inside the box. Find them all.</p>
+                </div>
+
+                <div class="game">
+                    <div class="hunt" id="huntArea"></div>
+
+                    <div class="status" id="huntStatus">
+                        Hearts found: 0 / 5
+                    </div>
+
+                    <button class="cta" onclick="startHunt()">
+                        Hide them again
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="page" id="reasons">
+            <div class="wrap">
+                <div class="title">
+                    <div class="kicker">Press the button</div>
+                    <h2>The Reason Machine</h2>
+                    <p>Hina wenna hethu godai.</p>
+                </div>
+
+                <div class="reason-wrap">
+                    <div class="reason-display" id="reasonDisplay">
+                        You are allowed to press the button now. ♡
+                    </div>
+
+                    <button class="cta" onclick="newReason()">
+                        Give me another reason
+                    </button>
+                </div>
+
+                <div style="height:25px;"></div>
+
+                <div class="letter" style="text-align:center;">
+                    <p>
+                        Reason 0:
+                        because every good birthday website deserves at least one completely unnecessary button.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="page" id="future">
+            <div class="wrap">
+                <div class="title">
+                    <div class="kicker">Open carefully</div>
+                    <h2>Future Postcards</h2>
+                    <p>These aren't memories yet. Maybe one day they will be.</p>
+                </div>
+
+                <div class="postcards">
+                    <div class="postcard" onclick="togglePostcard(this)">
+                        <h3>Postcard 01 · Somewhere</h3>
+                        <p class="hidden">
+                            Kohe hri lassanama lassana thanaka api denna bada palenna kaala photosuth gahala halima adalen sathtin inna one
+                        </p>
+                    </div>
+
+                    <div class="postcard" onclick="togglePostcard(this)">
+                        <h3>Postcard 02 · A sunset</h3>
+                        <p class="hidden">
+                            One of those evenings where the sky decides to show off and nobody wants to leave yet.
+                        </p>
+                    </div>
+
+                    <div class="postcard" onclick="togglePostcard(this)">
+                        <h3>Postcard 03 · Years later</h3>
+                        <p class="hidden">
+                            Looking through old pictures and laughing at how seriously everything once felt.
+                        </p>
+                    </div>
+
+                    <div class="postcard" onclick="togglePostcard(this)">
+                        <h3>Postcard 04 · Another birthday</h3>
+                        <p class="hidden">
+                            Another year.
+                            More pictures.
+                            A bigger website.
+                            Probably even more chaos.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="page" id="stars-page">
+            <div class="wrap">
+                <div class="title">
+                    <div class="kicker">Look closely</div>
+                    <h2>Our Little Constellation</h2>
+                    <p>Find seven stars. Connect the sky.</p>
+                </div>
+
+                <div class="constellation" id="constellationBox"></div>
+
+                <div class="letter" id="constellationMessage" style="margin-top:20px;text-align:center;">
+                    <p>Stars found: 0 / 7</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="page" id="cake">
+            <div class="wrap">
+                <div class="title">
+                    <div class="kicker">Birthday emergency</div>
+                    <h2>Make a wish.</h2>
+                    <p>Tap every flame until the cake has no choice but to celebrate.</p>
+                </div>
+
+                <div class="game">
+                    <div class="cake">
+                        <div class="candles">
+                            <div class="candle"><div class="flame"></div></div>
+                            <div class="candle"><div class="flame"></div></div>
+                            <div class="candle"><div class="flame"></div></div>
+                            <div class="candle"><div class="flame"></div></div>
+                            <div class="candle"><div class="flame"></div></div>
+                        </div>
+
+                        <div class="cake-top"></div>
+                        <div class="cake-mid"></div>
+                        <div class="cake-base"></div>
+                    </div>
+
+                    <div class="counter" id="candleStatus">Candles glowing: 5</div>
+
+                    <button class="cta" onclick="resetCake()">Light them again</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="page" id="vault">
+            <div class="wrap">
+                <div class="title">
+                    <div class="kicker">Almost hidden</div>
+                    <h2>The Secret Vault</h2>
+                    <p>Four digits. Somewhere in the website are clues.</p>
+                </div>
+
+                <div class="vault">
+                    <div class="vault-display" id="codeDisplay">_ _ _ _</div>
+
+                    <div class="digit-grid" id="digitGrid"></div>
+
+                    <div class="vault-message" id="vaultMessage">
+                        The code is not random.
+                        Tiny numbers and little details matter.
+                    </div>
+
+                    <button class="ghost-btn" onclick="resetVault()">
+                        Reset
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="page" id="final">
+            <div class="wrap final">
+                <div class="final-inner">
+                    <div class="kicker">You made it</div>
+
+                    <div class="final-heart">♡</div>
+
+                    <h2>For Devi</h2>
+
+                    <p>
+                        Thank you for being part of so many favourite memories.
+                        Keep smiling.
+                        Keep dreaming.
+                        Keep being exactly you.
+                    </p>
+
+                    <p>
+                        I hope this year brings you beautiful days,
+                        random adventures,
+                        people who make you laugh,
+                        and a camera roll that somehow becomes even more impossible to organize.
+                    </p>
+
+                    <p>
+                        More photographs.
+                        More chapters.
+                        More little moments.
+                    </p>
+
+                    <p>
+                        <strong>Happy Birthday, Devi. ♡</strong>
+                    </p>
+
+                    <button class="cta" onclick="go('home')">
+                        Back to the beginning
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="modal" id="photoModal" onclick="closePhoto(event)">
+        <div class="modal-close">×</div>
+        <img id="modalImage" src="" alt="Memory">
+    </div>
+
+    <audio id="backgroundMusic" preload="auto" loop>
+        <source src="music/a-thousand-years.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        const photos = [{"id": 1, "file": "01.jpg", "original": "1604CDF6-E30E-40AC-BD4C-EF580A90D8D5.JPG"}, {"id": 2, "file": "02.jpg", "original": "23249BAC-66C6-4F15-9CA1-9686EE6F1FB2.JPG"}, {"id": 3, "file": "03.jpg", "original": "24599538-DD25-49EB-8B92-AADB0F6E87FC.JPG"}, {"id": 4, "file": "04.jpg", "original": "3A2FC7B3-1F65-4EBC-9AD0-C453CAD7F6F1.JPG"}, {"id": 5, "file": "05.jpg", "original": "700941F8-A0D4-45A5-B00B-442865ED8227.JPG"}, {"id": 6, "file": "06.jpg", "original": "82C0C51C-FFF0-4113-91A0-580A62B24767.JPG"}, {"id": 7, "file": "07.jpg", "original": "85E17A2C-9FF3-4294-A926-11FAD24C707A.JPG"}, {"id": 8, "file": "08.jpg", "original": "8A2811DE-1710-48B5-8215-55F6B2BA7D9F.JPG"}, {"id": 9, "file": "09.jpg", "original": "9375A631-1941-45C6-B7ED-AF1AB71BAA91.JPG"}, {"id": 10, "file": "10.jpg", "original": "977F130D-69A2-4A10-B383-70BCDBD5598C.jpg"}, {"id": 11, "file": "11.jpg", "original": "97C78C01-BC5E-4E43-BBE5-2CE00257CD87.JPG"}, {"id": 12, "file": "12.jpg", "original": "B1F3E6AD-14E1-459D-87C5-59672EFF3703.JPG"}, {"id": 13, "file": "13.jpg", "original": "C091D527-D17A-4631-9EC9-21CC08425155.JPG"}, {"id": 14, "file": "14.jpg", "original": "IMG_6248.JPG"}, {"id": 15, "file": "15.jpg", "original": "IMG_6249.JPG"}, {"id": 16, "file": "16.jpg", "original": "IMG_6250.JPG"}, {"id": 17, "file": "17.jpg", "original": "IMG_6251.JPG"}, {"id": 18, "file": "18.jpg", "original": "IMG_6252.JPG"}, {"id": 19, "file": "19.jpg", "original": "IMG_6253.JPG"}, {"id": 20, "file": "20.jpg", "original": "IMG_6254.JPG"}, {"id": 21, "file": "21.jpg", "original": "IMG_6255.JPG"}, {"id": 22, "file": "22.jpg", "original": "IMG_6256.JPG"}, {"id": 23, "file": "23.jpg", "original": "IMG_6257.jpg"}, {"id": 24, "file": "24.jpg", "original": "IMG_6258.JPG"}, {"id": 25, "file": "25.jpg", "original": "IMG_6259.JPG"}, {"id": 26, "file": "26.jpg", "original": "IMG_6260.JPG"}, {"id": 27, "file": "27.jpg", "original": "IMG_6261.JPG"}, {"id": 28, "file": "28.jpg", "original": "IMG_6262.JPG"}, {"id": 29, "file": "29.jpg", "original": "IMG_6263.JPG"}, {"id": 30, "file": "30.jpg", "original": "IMG_6264.JPG"}, {"id": 31, "file": "31.jpg", "original": "IMG_6265.JPG"}, {"id": 32, "file": "32.jpg", "original": "IMG_6266.JPG"}, {"id": 33, "file": "33.jpg", "original": "IMG_6267.JPG"}, {"id": 34, "file": "34.jpg", "original": "IMG_6268.JPG"}, {"id": 35, "file": "35.jpg", "original": "IMG_6269.JPG"}, {"id": 36, "file": "36.jpg", "original": "IMG_6270.JPG"}, {"id": 37, "file": "37.jpg", "original": "IMG_6274.JPG"}, {"id": 38, "file": "38.jpg", "original": "IMG_6275.JPG"}, {"id": 39, "file": "39.jpg", "original": "IMG_6276.JPG"}, {"id": 40, "file": "40.jpg", "original": "IMG_6278.JPG"}, {"id": 41, "file": "41.jpg", "original": "IMG_6279.JPG"}, {"id": 42, "file": "42.jpg", "original": "IMG_6280.JPG"}, {"id": 43, "file": "43.jpg", "original": "IMG_6281.JPG"}, {"id": 44, "file": "44.jpg", "original": "IMG_6282.JPG"}, {"id": 45, "file": "45.jpg", "original": "IMG_6283.JPG"}, {"id": 46, "file": "46.jpg", "original": "IMG_6284.JPG"}, {"id": 47, "file": "47.jpg", "original": "IMG_6285.JPG"}, {"id": 48, "file": "48.jpg", "original": "IMG_6286.JPG"}, {"id": 49, "file": "49.jpg", "original": "IMG_6287.JPG"}, {"id": 50, "file": "50.jpg", "original": "IMG_6288.JPG"}, {"id": 51, "file": "51.jpg", "original": "IMG_6289.JPG"}, {"id": 52, "file": "52.jpg", "original": "IMG_6290.JPG"}, {"id": 53, "file": "53.jpg", "original": "IMG_6291.JPG"}, {"id": 54, "file": "54.jpg", "original": "IMG_6292.JPG"}, {"id": 55, "file": "55.jpg", "original": "IMG_6293.JPG"}, {"id": 56, "file": "56.jpg", "original": "IMG_6294.JPG"}, {"id": 57, "file": "57.jpg", "original": "IMG_6295.JPG"}, {"id": 58, "file": "58.jpg", "original": "IMG_6296.JPG"}, {"id": 59, "file": "59.jpg", "original": "IMG_6297.JPG"}, {"id": 60, "file": "60.jpg", "original": "IMG_6298.JPG"}, {"id": 61, "file": "61.jpg", "original": "IMG_6299.JPG"}, {"id": 62, "file": "62.jpg", "original": "IMG_6300.JPG"}, {"id": 63, "file": "63.jpg", "original": "IMG_6301.JPG"}, {"id": 64, "file": "64.jpg", "original": "IMG_6302.JPG"}, {"id": 65, "file": "65.jpg", "original": "IMG_6303.JPG"}, {"id": 66, "file": "66.jpg", "original": "IMG_6304.JPG"}, {"id": 67, "file": "67.jpg", "original": "IMG_6305.JPG"}, {"id": 68, "file": "68.jpg", "original": "IMG_6306.JPG"}, {"id": 69, "file": "69.jpg", "original": "IMG_6328.JPG"}, {"id": 70, "file": "70.jpg", "original": "IMG_6329.JPG"}, {"id": 71, "file": "71.jpg", "original": "IMG_6330.JPG"}, {"id": 72, "file": "72.jpg", "original": "IMG_6331.JPG"}, {"id": 73, "file": "73.jpg", "original": "IMG_6332.JPG"}, {"id": 74, "file": "74.jpg", "original": "IMG_6333.JPG"}, {"id": 75, "file": "75.jpg", "original": "IMG_6334.JPG"}, {"id": 76, "file": "76.jpg", "original": "IMG_6335.JPG"}, {"id": 77, "file": "77.jpg", "original": "IMG_6342.JPG"}, {"id": 78, "file": "78.jpg", "original": "IMG_6343.JPG"}, {"id": 79, "file": "79.jpg", "original": "IMG_6344.JPG"}, {"id": 80, "file": "80.jpg", "original": "IMG_6345.JPG"}, {"id": 81, "file": "81.jpg", "original": "IMG_6346.JPEG"}, {"id": 82, "file": "82.jpg", "original": "IMG_6347.JPG"}, {"id": 83, "file": "83.jpg", "original": "IMG_6348.JPG"}, {"id": 84, "file": "84.jpg", "original": "IMG_6349.JPG"}, {"id": 85, "file": "85.jpg", "original": "IMG_6350.JPG"}, {"id": 86, "file": "86.jpg", "original": "IMG_6352.JPG"}, {"id": 87, "file": "87.jpg", "original": "IMG_6384.JPG"}, {"id": 88, "file": "88.jpg", "original": "IMG_6385.JPG"}, {"id": 89, "file": "89.jpg", "original": "IMG_6389.JPG"}, {"id": 90, "file": "90.jpg", "original": "IMG_6390.JPG"}];
+
+        const pageOrder = [
+            "home",
+            "welcome",
+            "map",
+            "story",
+            'group-details', 'group-selfies', 'group-mono', 'group-blue', 'group-portraits', 'group-us', 'group-posed', 'group-family', 'group-random', 'group-usagain',
+            "quiz",
+            "games",
+            "hunt",
+            "reasons",
+            "future",
+            "stars-page",
+            "cake",
+            "vault",
+            "final"
+        ];
+
+        let currentPhoto = null;
+
+        function go(page) {
+            document.querySelectorAll(".page").forEach(section => section.classList.remove("active"));
+            document.getElementById(page).classList.add("active");
+
+            document.querySelectorAll(".nav-btn").forEach(button => {
+                button.classList.toggle("active", button.dataset.page === page);
+            });
+
+            const index = pageOrder.indexOf(page);
+            const progress = Math.max(7, ((index + 1) / pageOrder.length) * 100);
+            document.getElementById("progressBar").style.width = progress + "%";
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }
+
+        document.querySelectorAll(".nav-btn").forEach(button => {
+            button.addEventListener("click", () => go(button.dataset.page));
+        });
+
+        document.querySelectorAll(".photo-card").forEach(card => {
+            card.addEventListener("click", () => openPhoto(card.dataset.photo));
+        });
+
+        function openPhoto(file) {
+            currentPhoto = file;
+            document.getElementById("modalImage").src = "photos/" + file;
+            document.getElementById("photoModal").classList.add("open");
+        }
+
+        function closePhoto(event) {
+            if (event.target.id === "photoModal" || event.target.className === "modal-close") {
+                document.getElementById("photoModal").classList.remove("open");
+            }
+        }
+
+        document.addEventListener("keydown", event => {
+            if (event.key === "Escape") {
+                document.getElementById("photoModal").classList.remove("open");
+            }
+        });
+
+        function shuffleChapter(pageId) {
+            const page = document.getElementById(pageId);
+            const grid = page.querySelector(".chapter-photos");
+            const cards = [...grid.children].sort(() => Math.random() - 0.5);
+            cards.forEach(card => grid.appendChild(card));
+            showToast("Chapter shuffled ✦");
+        }
+
+        const chapterSequence = ["details", "selfies", "mono", "blue", "portraits", "us", "posed", "family", "random", "usagain"];
+
+        function nextChapter(slug) {
+            const index = chapterSequence.indexOf(slug);
+            const next = chapterSequence[(index + 1) % chapterSequence.length];
+            go("group-" + next);
+        }
+
+        document.querySelectorAll(".quiz-options").forEach(group => {
+            group.addEventListener("click", event => {
+                if (event.target.tagName !== "BUTTON") return;
+
+                group.querySelectorAll("button").forEach(button => button.classList.remove("selected"));
+                event.target.classList.add("selected");
+            });
+        });
+
+        function finishQuiz() {
+            const groups = [...document.querySelectorAll(".quiz-options")];
+            const complete = groups.every(group => group.querySelector(".selected"));
+            const result = document.getElementById("quizResult");
+
+            result.style.display = "block";
+
+            if (!complete) {
+                result.textContent = "Oya ithim mn hithapu ewama daala";
+                return;
+            }
+
+            result.innerHTML =
+                "Scientific conclusion: this birthday website may have slightly too much effort in it. ♡<br><br>Congratulations. You may continue.";
+            showToast("Quiz complete ♡");
+        }
+
+        let matchFirst = null;
+        let matchLock = false;
+        let matchPairs = 0;
+
+        function startMatch() {
+            const grid = document.getElementById("matchGrid");
+            const status = document.getElementById("matchStatus");
+            const values = ["♡", "✦", "🌙", "🌸", "📸", "☀️", "🎀", "✨"];
+            const cards = [...values, ...values].sort(() => Math.random() - 0.5);
+
+            matchFirst = null;
+            matchLock = false;
+            matchPairs = 0;
+            grid.innerHTML = "";
+            status.textContent = "Pairs found: 0 / 8";
+
+            cards.forEach(value => {
+                const button = document.createElement("button");
+                button.className = "match-card";
+                button.textContent = value;
+                button.dataset.value = value;
+
+                button.addEventListener("click", () => {
+                    if (matchLock || button.classList.contains("flipped") || button.classList.contains("matched")) {
+                        return;
+                    }
+
+                    button.classList.add("flipped");
+
+                    if (!matchFirst) {
+                        matchFirst = button;
+                        return;
+                    }
+
+                    matchLock = true;
+
+                    if (matchFirst.dataset.value === button.dataset.value) {
+                        matchFirst.classList.add("matched");
+                        button.classList.add("matched");
+
+                        matchPairs++;
+                        matchFirst = null;
+                        matchLock = false;
+
+                        status.textContent = `Pairs found: ${matchPairs} / 8`;
+
+                        if (matchPairs === 8) {
+                            status.textContent = "Arcade complete. You found every pair. ♡";
+                            showToast("Memory Match complete");
+                        }
+                    } else {
+                        setTimeout(() => {
+                            button.classList.remove("flipped");
+                            matchFirst.classList.remove("flipped");
+                            matchFirst = null;
+                            matchLock = false;
+                        }, 650);
+                    }
+                });
+
+                grid.appendChild(button);
+            });
+        }
+
+        let selectedPhoto = null;
+
+        function photoRoulette() {
+            selectedPhoto = photos[Math.floor(Math.random() * photos.length)];
+            document.getElementById("rouletteText").textContent =
+                "The universe chose photo " + String(selectedPhoto.id).padStart(2,"0") + ".";
+            showToast("A memory has been chosen");
+        }
+
+        function randomPhotoOpen() {
+            if (!selectedPhoto) {
+                photoRoulette();
+            }
+
+            openPhoto(selectedPhoto.file);
+        }
+
+        let huntCount = 0;
+
+        function startHunt() {
+            const area = document.getElementById("huntArea");
+            const status = document.getElementById("huntStatus");
+
+            area.innerHTML = "";
+            huntCount = 0;
+            status.textContent = "Hearts found: 0 / 5";
+
+            for (let i = 0; i < 5; i++) {
+                const heart = document.createElement("span");
+
+                heart.className = "hunt-heart";
+                heart.textContent = "♡";
+                heart.style.left = (5 + Math.random() * 88) + "%";
+                heart.style.top = (7 + Math.random() * 82) + "%";
+                heart.style.animationDelay = (Math.random() * 1.5) + "s";
+
+                heart.addEventListener("click", () => {
+                    if (heart.dataset.found) return;
+
+                    heart.dataset.found = "1";
+                    heart.textContent = "♥";
+                    heart.style.color = "var(--rose)";
+                    heart.style.pointerEvents = "none";
+
+                    huntCount++;
+                    status.textContent = `Hearts found: ${huntCount} / 5`;
+
+                    if (huntCount === 5) {
+                        status.textContent = "You found all five. You officially know where to look. ♡";
+                        showToast("Heart Hunt complete");
+                    }
+                });
+
+                area.appendChild(heart);
+            }
+        }
+
+        const reasons = [
+            "Because your smile has excellent timing.",
+            "Because normal days somehow become memorable.",
+            "Because your camera roll contains approximately 47 versions of the same good moment.",
+            "Because you make ordinary little things feel less ordinary.",
+            "Because you are very easy to make a website ridiculously long for.",
+            "Because there is always another photograph worth keeping.",
+            "Because you are you. That was the whole point.",
+            "Because some people just make a place feel warmer.",
+            "Because this page needed at least one completely unnecessary compliment machine.",
+            "Because the birthday girl deserves extra pages.",
+            "Because the tiny moments matter too.",
+            "Because there is probably a new favourite photo somewhere in those 90."
+        ];
+
+        function newReason() {
+            const value = reasons[Math.floor(Math.random() * reasons.length)];
+            document.getElementById("reasonDisplay").textContent = value;
+        }
+
+        function togglePostcard(card) {
+            card.querySelector(".hidden").classList.toggle("hidden");
+        }
+
+        const starPoints = [
+            [11, 24],
+            [25, 13],
+            [40, 29],
+            [55, 17],
+            [70, 30],
+            [84, 48],
+            [66, 59],
+            [48, 44],
+            [31, 65],
+            [18, 51]
+        ];
+
+        const constellationBox = document.getElementById("constellationBox");
+        let starsFound = 0;
+
+        starPoints.forEach((position, index) => {
+            const star = document.createElement("span");
+
+            star.className = "constellation-star";
+            star.style.left = position[0] + "%";
+            star.style.top = position[1] + "%";
+            star.dataset.index = index;
+
+            star.addEventListener("click", () => {
+                if (star.classList.contains("found")) return;
+
+                star.classList.add("found");
+                starsFound++;
+
+                document.getElementById("constellationMessage").innerHTML =
+                    `<p>Stars found: ${starsFound} / 7</p>`;
+
+                if (starsFound === 7) {
+                    drawConstellation();
+
+                    document.getElementById("constellationMessage").innerHTML =
+                        "<p>Seven stars. One little constellation. Maybe some things look better when the dots connect. ♡</p>";
+
+                    showToast("Constellation complete");
+                }
+            });
+
+            constellationBox.appendChild(star);
+        });
+
+        function drawConstellation() {
+            const points = starPoints.slice(0, 7);
+
+            for (let i = 0; i < points.length - 1; i++) {
+                const [x1, y1] = points[i];
+                const [x2, y2] = points[i + 1];
+
+                const line = document.createElement("span");
+                line.className = "constellation-line";
+
+                const dx = (x2 - x1) * 0.01 * constellationBox.clientWidth;
+                const dy = (y2 - y1) * 0.01 * constellationBox.clientHeight;
+                const length = Math.sqrt(dx * dx + dy * dy);
+
+                line.style.width = length + "px";
+                line.style.left = x1 + "%";
+                line.style.top = y1 + "%";
+                line.style.transform = `rotate(${Math.atan2(dy, dx)}rad)`;
+
+                constellationBox.appendChild(line);
+            }
+        }
+
+        document.querySelectorAll(".candle").forEach(candle => {
+            candle.addEventListener("click", () => {
+                candle.classList.toggle("out");
+                updateCandleStatus();
+            });
+        });
+
+        function updateCandleStatus() {
+            const glowing = document.querySelectorAll(".candle:not(.out)").length;
+            const status = document.getElementById("candleStatus");
+
+            status.textContent = `Candles glowing: ${glowing}`;
+
+            if (glowing === 0) {
+                status.textContent = "All candles out. Make a wish. ♡";
+                showToast("Wish time");
+            }
+        }
+
+        function resetCake() {
+            document.querySelectorAll(".candle").forEach(candle => candle.classList.remove("out"));
+            updateCandleStatus();
+        }
+
+        const secretCode = "1428";
+        let enteredCode = "";
+
+        function renderDigits() {
+            const grid = document.getElementById("digitGrid");
+
+            for (let i = 1; i <= 9; i++) {
+                const button = document.createElement("button");
+                button.textContent = i;
+                button.addEventListener("click", () => enterDigit(String(i)));
+                grid.appendChild(button);
+            }
+
+            const zero = document.createElement("button");
+            zero.textContent = "0";
+            zero.addEventListener("click", () => enterDigit("0"));
+            grid.appendChild(zero);
+        }
+
+        function enterDigit(digit) {
+            if (enteredCode.length >= 4) return;
+
+            enteredCode += digit;
+
+            document.getElementById("codeDisplay").textContent =
+                enteredCode.padEnd(4, "_").split("").join(" ");
+
+            if (enteredCode.length === 4) {
+                const message = document.getElementById("vaultMessage");
+
+                if (enteredCode === secretCode) {
+                    message.innerHTML =
+                        "Vault unlocked. ♡<br><br>You found the quiet little secret that wasn't meant to be obvious.";
+                    showToast("Vault unlocked");
+                } else {
+                    message.textContent = "Not quite. There are clues around the website.";
+                    setTimeout(resetVault, 900);
+                }
+            }
+        }
+
+        function resetVault() {
+            enteredCode = "";
+            document.getElementById("codeDisplay").textContent = "_ _ _ _";
+            document.getElementById("vaultMessage").textContent =
+                "The code is not random. Tiny numbers and little details matter.";
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById("toast");
+
+            toast.textContent = message;
+            toast.classList.add("show");
+
+            clearTimeout(window.toastTimer);
+
+            window.toastTimer = setTimeout(() => {
+                toast.classList.remove("show");
+            }, 1900);
+        }
+
+        for (let i = 0; i < 115; i++) {
+            const star = document.createElement("span");
+
+            star.className = "star";
+            star.style.left = Math.random() * 100 + "%";
+            star.style.top = Math.random() * 100 + "%";
+            star.style.animationDelay = Math.random() * 4 + "s";
+
+            document.getElementById("stars").appendChild(star);
+        }
+
+        const heartCanvas = document.getElementById("heartCanvas");
+        const heartCtx = heartCanvas.getContext("2d");
+        let heartWidth = 0;
+        let heartHeight = 0;
+        let heartDots = [];
+
+        function resizeHeart() {
+            const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+            heartCanvas.width = window.innerWidth * dpr;
+            heartCanvas.height = window.innerHeight * dpr;
+            heartCanvas.style.width = window.innerWidth + "px";
+            heartCanvas.style.height = window.innerHeight + "px";
+
+            heartCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+            heartWidth = window.innerWidth;
+            heartHeight = window.innerHeight;
+            heartDots = [];
+
+            for (let i = 0; i < 270; i++) {
+                const t = Math.random() * Math.PI * 2;
+                const x = 16 * Math.pow(Math.sin(t), 3);
+                const y = -(13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t));
+
+                heartDots.push({
+                    x: x * 8,
+                    y: y * 8,
+                    phase: Math.random() * Math.PI * 2,
+                    speed: 0.6 + Math.random() * 1.2
+                });
+            }
+        }
+
+        function animateHeart(time) {
+            heartCtx.clearRect(0, 0, heartWidth, heartHeight);
+
+            const cx = heartWidth * 0.5;
+            const cy = heartHeight * 0.48;
+
+            heartDots.forEach(dot => {
+                const pulse =
+                    1 + Math.sin(time * 0.002 * dot.speed + dot.phase) * 0.035;
+
+                const x = cx + dot.x * pulse;
+                const y = cy + dot.y * pulse;
+
+                heartCtx.beginPath();
+                heartCtx.arc(x, y, 1.2, 0, Math.PI * 2);
+                heartCtx.fillStyle = "rgba(255,100,160,0.47)";
+                heartCtx.fill();
+            });
+
+            requestAnimationFrame(animateHeart);
+        }
+
+        window.addEventListener("resize", resizeHeart);
+        resizeHeart();
+        requestAnimationFrame(animateHeart);
+
+        
+        const backgroundMusic = document.getElementById("backgroundMusic");
+        const musicButton = document.getElementById("musicButton");
+        let musicStarted = false;
+
+        backgroundMusic.volume = 0.38;
+
+        async function startMusic() {
+            try {
+                await backgroundMusic.play();
+                musicStarted = true;
+                musicButton.textContent = "♫ Music On";
+                musicButton.classList.add("active");
+                return true;
+            } catch (error) {
+                musicButton.textContent = "♫ Tap Music";
+                return false;
+            }
+        }
+
+        function stopMusic() {
+            backgroundMusic.pause();
+            musicStarted = false;
+            musicButton.textContent = "♫ Music";
+            musicButton.classList.remove("active");
+        }
+
+        async function toggleMusic() {
+            if (backgroundMusic.paused) {
+                const started = await startMusic();
+
+                if (started) {
+                    showToast("A Thousand Years ♡");
+                }
+            } else {
+                stopMusic();
+                showToast("Music paused");
+            }
+        }
+
+        musicButton.addEventListener("click", toggleMusic);
+
+        document.addEventListener("click", async event => {
+            const target = event.target;
+
+            if (
+                !musicStarted &&
+                target.closest(".cta") &&
+                target.closest(".cta").textContent.includes("Start exploring")
+            ) {
+                await startMusic();
+            }
+        });
+
+        startMatch();
+        startHunt();
+        renderDigits();
+        go("home");
+    </script>
+</body>
+</html>
