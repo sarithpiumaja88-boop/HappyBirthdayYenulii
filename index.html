@@ -566,17 +566,23 @@
             border: 1px solid rgba(255,165,195,0.2);
             border-radius: 17px;
             color: transparent;
+            -webkit-text-fill-color: transparent;
             background: rgba(255,255,255,0.03);
             font-size: 32px;
+            line-height: 1;
             transition: 0.22s ease;
             -webkit-tap-highlight-color: transparent;
-            backface-visibility: hidden;
-            transform: none;
+            -webkit-appearance: none;
+            appearance: none;
+            touch-action: manipulation;
+            user-select: none;
+            cursor: pointer;
         }
 
         .match-card.flipped,
         .match-card.matched {
-            color: #fff;
+            color: #fff !important;
+            -webkit-text-fill-color: #fff !important;
             background: rgba(255,95,150,0.15);
             transform: scale(1.02);
             box-shadow: 0 0 18px rgba(255,95,150,0.16);
